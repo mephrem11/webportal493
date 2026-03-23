@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
-import { Package, FileText, Calendar, MessageSquare, Truck, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Package, FileText, Calendar, MessageSquare, Truck, Search, ChevronLeft, ChevronRight, Repeat } from "lucide-react";
 import { triggerGoogleSheetsSync } from "../utils/googleSheetsSync";
 import goodsRecyclingLogo from "../assets/logo.svg";
 import { INVENTORY_CATEGORIES } from "../constants/inventory";
@@ -315,7 +315,7 @@ export function CharityPortalSimple() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         {/* Quick Access Links */}
-        <div className="grid grid-cols-1 gap-3 mb-6 sm:grid-cols-2 md:grid-cols-5 md:gap-4">
+        <div className="grid grid-cols-1 gap-3 mb-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-7 md:gap-4">
           <Link
             to="/available-inventory"
             className="flex items-center gap-3 rounded-lg border border-emerald-300 bg-emerald-100 p-4 text-emerald-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-emerald-200 hover:shadow-lg"
@@ -368,6 +368,28 @@ export function CharityPortalSimple() {
             <div>
               <div className="font-semibold">Support Request</div>
               <div className="text-xs text-orange-800">Get help</div>
+            </div>
+          </Link>
+
+          <Link
+            to="/recurring-wishlists"
+            className="flex items-center gap-3 rounded-lg border border-teal-300 bg-teal-100 p-4 text-teal-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-teal-200 hover:shadow-lg"
+          >
+            <Repeat size={24} className="text-teal-700" />
+            <div>
+              <div className="font-semibold">Recurring Wish Lists</div>
+              <div className="text-xs text-teal-800">Weekly recurring requests</div>
+            </div>
+          </Link>
+
+          <Link
+            to="/weekly-schedule"
+            className="flex items-center gap-3 rounded-lg border border-fuchsia-300 bg-fuchsia-100 p-4 text-fuchsia-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-fuchsia-200 hover:shadow-lg"
+          >
+            <Calendar size={24} className="text-fuchsia-700" />
+            <div>
+              <div className="font-semibold">Weekly Schedule</div>
+              <div className="text-xs text-fuchsia-800">Delivery calendar and dates</div>
             </div>
           </Link>
         </div>

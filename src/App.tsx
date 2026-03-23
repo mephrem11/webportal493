@@ -32,6 +32,9 @@ import { AvailableInventory } from "./pages/AvailableInventory";
 import { ChangePassword } from "./pages/ChangePassword";
 import { PartnerAccountStatus } from "./pages/PartnerAccountStatus";
 import { AuthCallbackPage } from "./pages/AuthCallbackPage";
+import { AboutPage } from "./pages/AboutPage";
+import { HowItWorksPage } from "./pages/HowItWorksPage";
+import { DonationBinPage } from "./pages/DonationBinPage";
 
 function App() {
   return (
@@ -43,6 +46,9 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/password-change" element={<PasswordChangePage />} />
       <Route path="/callback" element={<AuthCallbackPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/how-it-works" element={<HowItWorksPage />} />
+      <Route path="/donation-bin" element={<DonationBinPage />} />
 
       {/* Partner Portal */}
       <Route path="/portal" element={<CharityPortalSimple />} />

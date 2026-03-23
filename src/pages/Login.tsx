@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { useAuth0 } from "../contexts/Auth0Context";
 import goodsRecyclingLogo from "../assets/logo.svg";
+import { PublicTabs } from "../components/PublicTabs";
 
 function getPartnerStatus(email: string): "pending" | "active" | "suspended" | null {
   const normalized = email.trim().toLowerCase();
@@ -66,14 +67,31 @@ export function Login() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100 px-4">
-      <div className="flex flex-1 items-center justify-center py-8">
-      <div className="w-full max-w-md rounded-2xl bg-white p-10 shadow-lg">
-        <div className="mb-8">
-          <h1 className="mb-1 text-4xl font-bold text-gray-900" style={{ fontFamily: "Playfair Display, serif" }}>
-            CharityPortal
+    <div className="flex min-h-screen flex-col bg-gradient-to-b from-emerald-50 via-white to-cyan-50">
+      <PublicTabs />
+
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 px-4 py-8 sm:px-6 lg:flex-row lg:items-start lg:gap-8">
+      <section className="w-full rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm lg:w-1/2 lg:p-8">
+        <div className="mb-6">
+          <h1 className="mb-2 text-3xl font-bold text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif" }}>
+            Charity Partner Portal
           </h1>
-          <p className="text-sm text-gray-500">Sign in to your account</p>
+          <p className="text-sm text-gray-600 sm:text-base">Secure, simple sign-in for charity partners and administrators.</p>
+        </div>
+
+        <div className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <Link
+            to="/login"
+            className="rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center text-sm font-semibold text-emerald-800 hover:bg-emerald-100"
+          >
+            Charity Partner Login
+          </Link>
+          <Link
+            to="/staff/login"
+            className="rounded-lg border border-blue-300 bg-blue-50 px-4 py-2.5 text-center text-sm font-semibold text-blue-800 hover:bg-blue-100"
+          >
+            Administrator Login
+          </Link>
         </div>
 
         {error && (
@@ -151,8 +169,31 @@ export function Login() {
             className="mx-auto h-24 w-auto"
           />
         </div>
+      </section>
 
-      </div>
+      <section className="w-full rounded-2xl border border-cyan-100 bg-white p-6 shadow-sm lg:w-1/2 lg:p-8">
+        <h2 className="text-2xl font-bold text-cyan-900">Portal Scope and Release Criteria</h2>
+        <p className="mt-3 text-sm leading-7 text-gray-700">
+          High-priority product for charity partners to log in, submit requests, edit recurring wish lists, track
+          request status, and view weekly delivery schedules while staff and sorting teams manage updates.
+        </p>
+
+        <div className="mt-5 grid grid-cols-1 gap-3 text-sm text-gray-800">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Smooth login for charity users and administrators</div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Requests appear in system and can be edited</div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Role-based access so charities only see their data</div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Delivery dates and status are viewable through portal tools</div>
+          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Google Sheets syncing remains enabled for operational reporting</div>
+        </div>
+
+        <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+          <h3 className="text-sm font-bold uppercase tracking-wide text-emerald-900">Hardware Coverage</h3>
+          <p className="mt-2 text-sm text-emerald-950">
+            Mobile-ready for Android smartphones and optimized for desktop/laptop use by warehouse staff,
+            office staff, and charity partners.
+          </p>
+        </div>
+      </section>
       </div>
 
       <footer className="py-6 text-center text-xs text-gray-600">
