@@ -286,7 +286,6 @@ export function CharityPortalSimple() {
             <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-14 w-auto md:h-16" />
             <div>
               <div className="text-lg font-extrabold text-gray-900 sm:text-xl md:text-2xl tracking-wide">Goods Recycling</div>
-              <div className="text-xs font-semibold text-gray-500 sm:text-sm">Charity Partner Portal</div>
               <p className="text-xs text-gray-400">Welcome, {user?.name || user?.email}</p>
             </div>
           </div>

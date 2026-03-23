@@ -151,9 +151,9 @@ export function Login() {
           >
             Create Account
           </Link>
-          <div className="mt-5 flex flex-col items-center gap-2">
-            <img src={goodsRecyclingLogo} alt="" className="h-28 w-auto" />
-            <span className="text-2xl font-extrabold text-gray-900 tracking-wide">Goods Reclyign</span>
+          <div className="mt-5 flex flex-col items-center gap-3">
+            <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-40 w-auto" />
+            <span className="text-4xl font-extrabold text-gray-900 tracking-tight" style={{ fontFamily: "Playfair Display, serif" }}>Goods Recycling</span>
           </div>
         </div>
 
