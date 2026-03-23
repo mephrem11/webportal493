@@ -145,7 +145,6 @@ export function Login() {
           </Link>
           <div className="mt-5 flex flex-col items-center gap-2">
             <img src={goodsRecyclingLogo} alt="" className="h-28 w-auto" />
-            <span className="text-2xl font-extrabold text-gray-900 tracking-wide">Goods Reclyign</span>
           </div>
         </div>
 
