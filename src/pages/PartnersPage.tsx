@@ -111,7 +111,7 @@ export function PartnersPage() {
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-white rounded-2xl shadow-lg p-12 max-w-md text-center"
+          className="bg-white rounded-2xl shadow-lg p-6 max-w-md text-center sm:p-12"
         >
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
             <CheckCircle size={32} className="text-green-500" />
@@ -138,8 +138,8 @@ export function PartnersPage() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="bg-gradient-to-br from-[#00C853] to-[#00A843] text-white py-16 px-6 text-center">
-        <h1 className="text-4xl font-bold mb-4">Become a Partner</h1>
-        <p className="text-xl text-white/90 max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold mb-4 sm:text-4xl">Become a Partner</h1>
+        <p className="text-base text-white/90 max-w-2xl mx-auto sm:text-xl">
           Join our network of nonprofits and community organizations receiving
           quality donated goods for the people you serve.
         </p>
@@ -164,13 +164,13 @@ export function PartnersPage() {
       </section>
 
       {/* Application Form */}
-      <section className="max-w-3xl mx-auto px-6 py-16">
+      <section className="max-w-3xl mx-auto px-4 py-10 sm:px-6 sm:py-16">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           className="bg-white rounded-2xl shadow-lg overflow-hidden"
         >
-          <div className="bg-gradient-to-r from-[#00D084] to-[#00C878] px-8 py-6">
+          <div className="bg-gradient-to-r from-[#00D084] to-[#00C878] px-4 py-5 sm:px-8 sm:py-6">
             <div className="flex items-center gap-3">
               <ArrowRight size={24} className="text-white" />
               <div>
@@ -180,8 +180,8 @@ export function PartnersPage() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="p-8 space-y-5">
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="p-4 space-y-5 sm:p-8">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Organization Name <span className="text-red-500">*</span>
@@ -208,7 +208,7 @@ export function PartnersPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Email Address <span className="text-red-500">*</span>
@@ -261,7 +261,7 @@ export function PartnersPage() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Clients Served Annually

@@ -138,7 +138,7 @@ export function RegisterPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#00C853]/10 to-white flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden w-full max-w-md">
-        <div className="bg-gradient-to-r from-[#C6F6D5] to-[#A7F3D0] px-8 py-6 text-center">
+        <div className="bg-gradient-to-r from-[#C6F6D5] to-[#A7F3D0] px-4 py-5 text-center sm:px-8 sm:py-6">
           <div className="w-14 h-14 bg-white/70 rounded-full flex items-center justify-center mx-auto mb-3">
             <UserPlus size={28} className="text-gray-900" />
           </div>
@@ -146,7 +146,7 @@ export function RegisterPage() {
           <p className="text-gray-800 text-sm mt-1">Join the Goods Recycling partner network</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 space-y-4 sm:p-8">
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg">
               {error}

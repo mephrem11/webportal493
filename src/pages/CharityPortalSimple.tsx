@@ -440,7 +440,7 @@ export function CharityPortalSimple() {
           ) : (
             <div className="divide-y divide-gray-100">
               {sharedDeliveries.slice(0, 5).map((delivery) => (
-                <div key={delivery.id} className="px-4 py-3 flex items-center justify-between gap-4 sm:px-6">
+                <div key={delivery.id} className="px-4 py-3 flex flex-col items-start gap-2 sm:px-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                   <div>
                     <p className="text-sm font-medium text-gray-900">Delivery #{delivery.id.slice(-6)}</p>
                     <p className="text-xs text-gray-500">
@@ -448,7 +448,7 @@ export function CharityPortalSimple() {
                       {delivery.address ? ` • ${delivery.address}` : ""}
                     </p>
                   </div>
-                  <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 capitalize">
+                  <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 capitalize sm:self-auto">
                     {delivery.status || "scheduled"}
                   </span>
                 </div>

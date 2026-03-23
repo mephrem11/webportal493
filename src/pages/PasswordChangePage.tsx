@@ -141,7 +141,7 @@ export function PasswordChangePage() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden w-full max-w-md">
-        <div className="bg-gradient-to-r from-[#00D084] to-[#00C878] px-8 py-6 text-center">
+        <div className="bg-gradient-to-r from-[#00D084] to-[#00C878] px-4 py-5 text-center sm:px-8 sm:py-6">
           <div className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
             <Lock size={28} className="text-white" />
           </div>
@@ -149,7 +149,7 @@ export function PasswordChangePage() {
           {email && <p className="text-white/80 text-sm mt-1">{email}</p>}
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 space-y-4 sm:p-8">
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg">
               {error}
