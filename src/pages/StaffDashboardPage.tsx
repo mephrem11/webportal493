@@ -344,7 +344,13 @@ export function StaffDashboardPage() {
   }, [refreshCustomers]);
 
   useEffect(() => {
-    const onUpdate = () => refreshInventory();
+    const onUpdate = () => {
+      refreshInventory();
+      refreshPartners();
+      refreshDeliveries();
+      refreshCustomers();
+      setRequests(getStoredRequests());
+    };
     const onStorage = (e: StorageEvent) => {
       if (e.key === "staff_inventory" || e.key === "inventory_items") refreshInventory();
       if (e.key === "mock_users" || e.key === "user_accounts") refreshPartners();
@@ -352,10 +358,16 @@ export function StaffDashboardPage() {
       if (e.key === "simple_requests" || e.key === "mock_users" || e.key === "user_accounts") refreshCustomers();
     };
     window.addEventListener("inventoryUpdated", onUpdate);
+    window.addEventListener("requestsUpdated", onUpdate);
+    window.addEventListener("deliveriesUpdated", onUpdate);
+    window.addEventListener("customersUpdated", onUpdate);
     window.addEventListener("focus", refreshDeliveries);
     window.addEventListener("storage", onStorage);
     return () => {
       window.removeEventListener("inventoryUpdated", onUpdate);
+      window.removeEventListener("requestsUpdated", onUpdate);
+      window.removeEventListener("deliveriesUpdated", onUpdate);
+      window.removeEventListener("customersUpdated", onUpdate);
       window.removeEventListener("focus", refreshDeliveries);
       window.removeEventListener("storage", onStorage);
     };

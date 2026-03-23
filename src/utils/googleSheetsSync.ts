@@ -33,8 +33,8 @@ const WEBHOOK_STORAGE_KEY = "google_sheets_sync_webhook";
 const HASH_STORAGE_KEY = "google_sheets_last_hash";
 const STATUS_STORAGE_KEY = "google_sheets_sync_status";
 const STATUS_EVENT_NAME = "googleSheetsSyncStatus";
-const AUTO_SYNC_MIN_INTERVAL_MS = 5000;
-const AUTO_SYNC_MAX_INTERVAL_MS = 15000;
+const AUTO_SYNC_MIN_INTERVAL_MS = 10000;
+const AUTO_SYNC_MAX_INTERVAL_MS = 25000;
 const RETRY_BASE_DELAY_MS = 5000;
 const RETRY_MAX_DELAY_MS = 60000;
 const PULL_SYNC_HASH_KEY = "google_sheets_pull_hash";
@@ -590,6 +590,9 @@ export async function pullFromGoogleSheets(reason: string): Promise<boolean> {
 
   localStorage.setItem(PULL_SYNC_HASH_KEY, pullHash);
   window.dispatchEvent(new Event("inventoryUpdated"));
+  window.dispatchEvent(new Event("requestsUpdated"));
+  window.dispatchEvent(new Event("deliveriesUpdated"));
+  window.dispatchEvent(new Event("customersUpdated"));
   updateSyncStatus({
     lastSuccessAt: new Date().toISOString(),
     lastError: null,

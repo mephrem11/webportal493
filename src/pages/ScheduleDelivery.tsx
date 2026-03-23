@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Calendar, MapPin, Clock, CheckCircle } from "lucide-react";
 import { AddressAutocomplete } from "../components/AddressAutocomplete";
-import { triggerGoogleSheetsSync } from "../utils/googleSheetsSync";
+import { triggerFullSheetsSync, triggerGoogleSheetsSync } from "../utils/googleSheetsSync";
+import { sendPortalEmail } from "../utils/emailService";
 
 export function ScheduleDelivery() {
   const navigate = useNavigate();
@@ -75,7 +76,17 @@ export function ScheduleDelivery() {
       localStorage.setItem("scheduled_deliveries", JSON.stringify(existing));
       localStorage.setItem("partner_deliveries", JSON.stringify(partnerDeliveries));
     }
+    await sendPortalEmail({
+      to: "admin@goodsrecycling.org",
+      from: "noreply@goodsrecycling.org",
+      subject: editId ? "Delivery schedule updated by partner" : "New partner delivery scheduled",
+      message:
+        `${editId ? "A delivery was updated" : "A new delivery was scheduled"}.\n\nDay: ${form.day}\nTime: ${form.startTime}-${form.endTime}\nAddress: ${form.address}\nContact: ${form.contactName}\nPhone: ${form.contactPhone || "N/A"}\nNotes: ${form.notes || "N/A"}`,
+    });
+
     void triggerGoogleSheetsSync("delivery_created");
+    void triggerFullSheetsSync("delivery_created");
+    window.dispatchEvent(new Event("deliveriesUpdated"));
     window.dispatchEvent(new Event("inventoryUpdated"));
 
     setSubmitting(false);

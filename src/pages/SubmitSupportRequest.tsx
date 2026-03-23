@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Send, CheckCircle } from "lucide-react";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
+import { sendPortalEmail } from "../utils/emailService";
+import { triggerFullSheetsSync } from "../utils/googleSheetsSync";
 
 type SupportForm = {
   partnerName: string;
@@ -32,7 +34,7 @@ export function SubmitSupportRequest() {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -64,6 +66,17 @@ export function SubmitSupportRequest() {
 
       existing.push(newRequest);
       localStorage.setItem("support_requests", JSON.stringify(existing));
+      window.dispatchEvent(new Event("supportRequestsUpdated"));
+
+      await sendPortalEmail({
+        to: "admin@goodsrecycling.org",
+        from: "noreply@goodsrecycling.org",
+        subject: `New support request: ${form.subject}`,
+        message:
+          `A new support request was submitted.\n\nPartner: ${form.partnerName}\nContact: ${form.name}\nPhone: ${form.phone}${form.extension ? ` ext ${form.extension}` : ""}\nEmail: ${user?.email || ""}\nSubject: ${form.subject}\nDescription: ${form.description}`,
+      });
+
+      void triggerFullSheetsSync("support_request_created");
       setSubmitted(true);
     } catch {
       setError("Failed to submit support request. Please try again.");

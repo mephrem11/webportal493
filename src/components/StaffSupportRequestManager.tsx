@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
 
 interface SupportRequest {
@@ -32,6 +32,25 @@ function getStoredSupportRequests(): SupportRequest[] {
 export function StaffSupportRequestManager({ staffName, staffEmail }: StaffSupportRequestManagerProps) {
   const [requests, setRequests] = useState<SupportRequest[]>(getStoredSupportRequests);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const refresh = () => setRequests(getStoredSupportRequests());
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "support_requests") refresh();
+    };
+
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("focus", refresh);
+    window.addEventListener("supportRequestsUpdated", refresh as EventListener);
+    const timer = window.setInterval(refresh, 10000);
+
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("focus", refresh);
+      window.removeEventListener("supportRequestsUpdated", refresh as EventListener);
+      window.clearInterval(timer);
+    };
+  }, []);
 
   // staffName and staffEmail are available for future API integration
   void staffName;
