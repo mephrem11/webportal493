@@ -78,6 +78,9 @@ export function Login() {
         <div className="pointer-events-none absolute -left-12 -bottom-12 h-28 w-28 rounded-full bg-cyan-100/70 blur-xl" />
 
         <div className="relative mb-6">
+          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+            Client Portal
+          </p>
           <h1 className="mb-2 text-4xl font-bold text-gray-900 sm:text-5xl" style={{ fontFamily: "Playfair Display, serif" }}>
             Sign In
           </h1>
