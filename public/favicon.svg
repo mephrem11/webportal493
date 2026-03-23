@@ -1,30 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="180 20 380 210" fill="none">
 	<title>Goods Recycling Favicon</title>
-	<g stroke="#2DBA73" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-		<path d="M128 18v28" />
-		<path d="M174 30l-14 22" />
-		<path d="M82 30l14 22" />
-		<path d="M76 108l13-20" />
-		<path d="M180 108l-13-20" />
-		<path d="M128 118V95" />
+
+	<g stroke="#2DBA73" stroke-width="11" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M370 28V84" />
+		<path d="M462 52L434 96" />
+		<path d="M278 52L306 96" />
+		<path d="M266 204L292 164" />
+		<path d="M474 204L448 164" />
+		<path d="M370 224V178" />
 	</g>
 
-	<g fill="#fff" stroke="#2DBA73" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
-		<path d="M103 64l25 7v39l-25-7V64z" />
-		<path d="M128 71l26-7v39l-26 7V71z" />
-		<path d="M103 64L92 51l23 4 9 14-21-5z" />
-		<path d="M128 71l-4-15 18 2 18 3-6 3-26 7z" />
+	<g fill="#FFFFFF" stroke="#2DBA73" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M320 120L370 132V210L320 196V120Z" />
+		<path d="M370 132L422 118V196L370 210V132Z" />
+		<path d="M320 120L298 94L344 102L362 130L320 120Z" />
+		<path d="M370 132L362 102L398 106L434 112L422 118L370 132Z" />
 	</g>
 
-	<g fill="none" stroke="#2DBA73" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
-		<path d="M35 92c11-18 24-25 37-23 13 2 21 10 31 18" />
-		<path d="M35 92c5 6 11 10 20 12" />
-		<path d="M48 88c5 7 12 12 22 14" />
-		<path d="M62 85c4 7 10 11 18 13" />
+	<g fill="none" stroke="#2DBA73" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M188 176C210 140 234 126 260 130C285 134 300 150 320 168" />
+		<path d="M188 176C198 188 210 196 228 200" />
+		<path d="M214 168C224 182 238 192 258 196" />
+		<path d="M242 162C250 176 262 184 278 188" />
 
-		<path d="M221 92c-11-18-24-25-37-23-13 2-21 10-31 18" />
-		<path d="M221 92c-5 6-11 10-20 12" />
-		<path d="M208 88c-5 7-12 12-22 14" />
-		<path d="M194 85c-4 7-10 11-18 13" />
+		<path d="M552 176C530 140 506 126 480 130C455 134 440 150 420 168" />
+		<path d="M552 176C542 188 530 196 512 200" />
+		<path d="M526 168C516 182 502 192 482 196" />
+		<path d="M498 162C490 176 478 184 462 188" />
 	</g>
 </svg>
