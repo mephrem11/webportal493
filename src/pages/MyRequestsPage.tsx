@@ -133,7 +133,7 @@ export function MyRequestsPage() {
 
   return (
     <div className="min-h-screen bg-[#E8E3DC]">
-      <div className="max-w-5xl mx-auto px-6 py-8">
+      <div className="max-w-5xl mx-auto px-4 py-6 sm:px-6 sm:py-8">
         <button
           onClick={() => navigate("/portal")}
           className="flex items-center gap-2 text-[#2E7D5E] hover:text-[#246B4E] mb-6 transition-colors text-sm font-medium"
@@ -142,7 +142,7 @@ export function MyRequestsPage() {
           Back to Portal
         </button>
 
-        <div className="flex gap-1 mb-6 bg-white rounded-xl p-1 shadow-sm w-fit">
+        <div className="mb-6 flex w-full flex-wrap gap-1 bg-white rounded-xl p-1 shadow-sm sm:w-fit">
           {(
             [
               { key: "requests", label: "My Requests", count: simpleRequests.length },
@@ -159,7 +159,7 @@ export function MyRequestsPage() {
                 setTab(key);
                 setExpandedId(null);
               }}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`flex flex-1 items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors sm:flex-none sm:justify-start ${
                 tab === key ? "bg-[#2E7D5E] text-white shadow" : "text-gray-600 hover:text-gray-900"
               }`}
             >
@@ -178,7 +178,7 @@ export function MyRequestsPage() {
           <button
             onClick={() => setRefreshToken((x) => x + 1)}
             title="Refresh"
-            className="p-2 text-gray-400 hover:text-gray-700 transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-700 transition-colors ml-auto"
           >
             <RefreshCw size={15} />
           </button>
@@ -186,17 +186,64 @@ export function MyRequestsPage() {
 
         {tab === "requests" && (
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+            <div className="px-4 py-4 border-b border-gray-200 flex flex-col gap-3 sm:px-6 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-lg font-bold text-gray-900">My Goods Requests</h2>
               <button
                 onClick={() => navigate("/portal")}
-                className="flex items-center gap-1.5 bg-[#2E7D5E] hover:bg-[#266B50] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                className="flex items-center justify-center gap-1.5 bg-[#2E7D5E] hover:bg-[#266B50] text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 <Plus size={14} />
                 New Request
               </button>
             </div>
-            <div className="overflow-x-auto">
+
+            <div className="divide-y divide-gray-200 md:hidden">
+              {simpleRequests.length === 0 ? (
+                <div className="px-4 py-12 text-center">
+                  <ShoppingBag size={36} className="text-gray-300 mx-auto mb-3" />
+                  <p className="text-sm text-gray-500">No requests yet. Go to the portal to submit your first request.</p>
+                </div>
+              ) : (
+                simpleRequests.map((request) => {
+                  const status = reqStatusConfig[request.status] || reqStatusConfig.pending;
+                  const expanded = expandedId === request.id;
+
+                  return (
+                    <div key={request.id} className="px-4 py-4">
+                      <button
+                        type="button"
+                        className="w-full text-left"
+                        onClick={() => setExpandedId(expanded ? null : request.id)}
+                      >
+                        <div className="mb-2 flex items-start justify-between gap-2">
+                          <p className="text-sm font-semibold text-gray-900">{request.item_type}</p>
+                          <span className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium ${status.color}`}>
+                            {status.icon}
+                            {status.label}
+                          </span>
+                        </div>
+                        <div className="space-y-1 text-xs text-gray-600">
+                          <p><span className="font-medium text-gray-700">Qty:</span> {request.quantity}</p>
+                          <p><span className="font-medium text-gray-700">Address:</span> {request.pickup_address}</p>
+                          <p><span className="font-medium text-gray-700">Delivery:</span> {request.delivery_date || "-"}</p>
+                        </div>
+                        <div className="mt-2 flex items-center justify-between text-xs text-gray-400">
+                          <span>Submitted {new Date(request.created_at).toLocaleDateString()}</span>
+                          {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                        </div>
+                      </button>
+                      {expanded && (
+                        <div className="mt-2 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700">
+                          <span className="font-medium">Notes:</span> {request.notes || "-"}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              )}
+            </div>
+
+            <div className="hidden overflow-x-auto md:block">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
@@ -269,11 +316,11 @@ export function MyRequestsPage() {
 
         {tab === "support" && (
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+            <div className="px-4 py-4 border-b border-gray-200 flex flex-col gap-3 sm:px-6 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-lg font-bold text-gray-900">My Support Tickets</h2>
               <button
                 onClick={() => navigate("/submit-support-request")}
-                className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                className="flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 <Plus size={14} />
                 New Ticket
@@ -294,10 +341,10 @@ export function MyRequestsPage() {
                   return (
                     <div key={request.id}>
                       <div
-                        className="flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-gray-50 transition-colors"
+                        className="flex flex-col gap-2 px-4 py-4 cursor-pointer hover:bg-gray-50 transition-colors sm:px-6 sm:flex-row sm:items-center sm:justify-between"
                         onClick={() => setExpandedId(expanded ? null : request.id)}
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-start gap-3 sm:items-center">
                           {status.icon}
                           <div>
                             <p className="font-medium text-gray-900 text-sm">{request.subject}</p>
@@ -307,7 +354,7 @@ export function MyRequestsPage() {
                             </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 self-end sm:self-auto">
                           <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${status.color}`}>
                             {status.label}
                           </span>

@@ -179,13 +179,13 @@ export function PortalPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#00C853] to-[#00A843] text-white px-6 py-8">
-        <div className="max-w-4xl mx-auto flex items-start justify-between">
+      <div className="bg-gradient-to-r from-[#00C853] to-[#00A843] text-white px-4 py-6 sm:px-6 sm:py-8">
+        <div className="max-w-4xl mx-auto flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex items-center gap-3">
-            <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-16 w-auto" />
+            <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-14 w-auto sm:h-16" />
             <div>
-            <h1 className="text-2xl font-bold">Partner Portal</h1>
-            <p className="text-white/80 text-sm mt-1">
+            <h1 className="text-xl font-bold sm:text-2xl">Partner Portal</h1>
+            <p className="text-white/80 text-xs sm:text-sm mt-1">
               Welcome back, {user?.name || "Partner"}
             </p>
             {user?.organization && (
@@ -195,7 +195,7 @@ export function PortalPage() {
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            className="flex w-full items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors sm:w-auto"
           >
             <LogOut size={16} />
             Sign Out
@@ -203,9 +203,9 @@ export function PortalPage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6 sm:py-8">
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 gap-3 mb-6 sm:grid-cols-3 sm:gap-4 sm:mb-8">
           <div className="bg-white rounded-xl shadow border border-gray-100 p-5 text-center">
             <p className="text-3xl font-bold text-blue-600">{myRequests.length}</p>
             <p className="text-sm text-gray-600 mt-1">My Requests</p>
@@ -221,7 +221,7 @@ export function PortalPage() {
         </div>
 
         {/* Nav cards */}
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 md:gap-4">
           {navCards.map((card) => (
             <button
               key={card.path}
@@ -254,7 +254,7 @@ export function PortalPage() {
 
         {/* Shared deliveries preview on front page */}
         <div className="mt-8 bg-white rounded-xl shadow border border-gray-100 overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+          <div className="px-4 py-4 border-b border-gray-200 flex flex-col gap-2 sm:px-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="text-lg font-semibold text-gray-900">Delivery Schedule</h2>
               <p className="text-xs text-gray-500">Partners and staff can view the same delivery updates</p>
@@ -272,7 +272,7 @@ export function PortalPage() {
           ) : (
             <div className="divide-y divide-gray-100">
               {myDeliveries.slice(0, 5).map((delivery) => (
-                <div key={delivery.id} className="px-5 py-3 flex items-center justify-between gap-4">
+                <div key={delivery.id} className="px-4 py-3 flex items-start justify-between gap-3 sm:px-5 sm:items-center sm:gap-4">
                   <div>
                     <p className="text-sm font-medium text-gray-900">Delivery #{delivery.id.slice(-6)}</p>
                     <p className="text-xs text-gray-500">
