@@ -73,13 +73,9 @@ export function Login() {
       <section className="w-full rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm lg:p-8">
         <div className="mb-6">
           <h1 className="mb-2 text-3xl font-bold text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif" }}>
-            Charity Partner Portal
+            Sign In
           </h1>
-          <p className="text-sm text-gray-600 sm:text-base">One secure login for both staff administrators and charity partners.</p>
-        </div>
-
-        <div className="mb-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
-          Use this same login form for both roles. Administrators are redirected to staff dashboard, and charity partners are redirected to the charity portal.
+          <p className="text-sm text-gray-600 sm:text-base">One secure login for staff administrators and charity partners.</p>
         </div>
 
         {error && (
