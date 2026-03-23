@@ -70,7 +70,7 @@ export function Login() {
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-emerald-50 via-white to-cyan-50">
       {/* Top-left logo */}
       <div className="px-6 pt-5 sm:px-10">
-        <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-36 w-auto sm:h-44" />
+        <img src={goodsRecyclingLogo} alt="Goods Recycling" style={{ height: '180px', width: 'auto' }} />
       </div>
       <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 pb-8 sm:px-6">
       <section className="relative w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-xl shadow-emerald-100/40 lg:p-8">
@@ -147,7 +147,7 @@ export function Login() {
             Create Account
           </Link>
           <div className="mt-5 flex justify-center">
-            <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-44 w-auto" />
+            <img src={goodsRecyclingLogo} alt="Goods Recycling" style={{ height: '200px', width: 'auto' }} />
           </div>
         </div>
 
