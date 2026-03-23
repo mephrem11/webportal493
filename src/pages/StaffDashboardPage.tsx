@@ -391,7 +391,7 @@ export function StaffDashboardPage() {
           "user_accounts",
           JSON.stringify(
             accounts.map((a) =>
-              a.email === partner.email
+              a.email.toLowerCase() === partner.email.toLowerCase()
                 ? {
                     ...a,
                     status,

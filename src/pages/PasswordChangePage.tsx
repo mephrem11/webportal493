@@ -65,7 +65,7 @@ export function PasswordChangePage() {
     const accounts: { email: string; password: string }[] = JSON.parse(
       localStorage.getItem("user_accounts") || "[]"
     );
-    const account = accounts.find((a) => a.email === email);
+    const account = accounts.find((a) => a.email.toLowerCase() === email.toLowerCase());
     if (account && account.password !== currentPassword) {
       setError("Current password is incorrect.");
       setLoading(false);
@@ -74,7 +74,7 @@ export function PasswordChangePage() {
 
     // Update password
     const updated = accounts.map((a) =>
-      a.email === email
+      a.email.toLowerCase() === email.toLowerCase()
         ? {
             ...a,
             password: newPassword,

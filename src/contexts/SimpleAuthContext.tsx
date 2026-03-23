@@ -158,7 +158,7 @@ export function SimpleAuthProvider({ children }: { children: ReactNode }) {
         (u) => u.email.toLowerCase() === normalized && u.password === password
       );
       if (found) {
-        if (found.status === "pending_approval") {
+        if (found.status === "pending_approval" || found.status === "pending") {
           throw new Error("Your account is pending approval by staff.");
         }
         const sessionData: AuthUser = {
