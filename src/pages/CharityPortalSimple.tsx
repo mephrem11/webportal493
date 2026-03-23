@@ -280,31 +280,31 @@ export function CharityPortalSimple() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-100 via-gray-50 to-slate-100">
       {/* Header */}
-      <div className="bg-white/95 border-b border-slate-300 px-8 py-4 backdrop-blur">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+      <div className="bg-white/95 border-b border-slate-300 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3 sm:gap-4">
             <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-16 w-auto md:h-20" />
             <div>
-            <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">Charity Partner Portal</h1>
-            <p className="text-sm text-gray-500">Welcome, {user?.name || user?.email}</p>
+            <h1 className="text-xl font-bold text-gray-900 sm:text-2xl md:text-3xl">Charity Partner Portal</h1>
+            <p className="text-xs text-gray-500 sm:text-sm">Welcome, {user?.name || user?.email}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-3 md:w-auto md:flex md:items-center md:gap-3">
             <Link
               to="/my-account"
-              className="rounded-lg border border-slate-300 bg-slate-100 px-3 py-1.5 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-200"
+              className="rounded-lg border border-slate-300 bg-slate-100 px-3 py-2 text-center text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-200"
             >
               My Account
             </Link>
             <Link
               to="/change-password"
-              className="rounded-lg border border-slate-300 bg-slate-100 px-3 py-1.5 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-200"
+              className="rounded-lg border border-slate-300 bg-slate-100 px-3 py-2 text-center text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-200"
             >
               Change Password
             </Link>
             <button
               onClick={() => { logout(); navigate("/"); }}
-              className="rounded-lg border border-[#00C853] bg-[#00C853] px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-[#00B248]"
+              className="rounded-lg border border-[#00C853] bg-[#00C853] px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#00B248]"
             >
               Sign out
             </button>
@@ -313,9 +313,9 @@ export function CharityPortalSimple() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         {/* Quick Access Links */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+        <div className="grid grid-cols-1 gap-3 mb-6 sm:grid-cols-2 md:grid-cols-5 md:gap-4">
           <Link
             to="/available-inventory"
             className="flex items-center gap-3 rounded-lg border border-emerald-300 bg-emerald-100 p-4 text-emerald-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-emerald-200 hover:shadow-lg"
@@ -373,9 +373,9 @@ export function CharityPortalSimple() {
         </div>
 
         <div className="mb-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+          <div className="px-4 py-4 border-b border-gray-200 flex flex-col gap-3 sm:px-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
-              <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-14 w-auto" />
+              <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-12 w-auto sm:h-14" />
               <div>
               <h2 className="text-lg font-bold text-gray-900">Delivery Schedule</h2>
               <p className="text-xs text-gray-500">Partners can view the same live schedule from their portal side</p>
@@ -383,7 +383,7 @@ export function CharityPortalSimple() {
             </div>
             <button
               onClick={() => navigate("/partner/deliveries")}
-              className="text-sm font-medium text-[#2E7D5E] hover:text-[#246B4E]"
+              className="text-left text-sm font-medium text-[#2E7D5E] hover:text-[#246B4E] sm:text-right"
             >
               View all
             </button>
@@ -394,7 +394,7 @@ export function CharityPortalSimple() {
           ) : (
             <div className="divide-y divide-gray-100">
               {sharedDeliveries.slice(0, 5).map((delivery) => (
-                <div key={delivery.id} className="px-6 py-3 flex items-center justify-between gap-4">
+                <div key={delivery.id} className="px-4 py-3 flex items-center justify-between gap-4 sm:px-6">
                   <div>
                     <p className="text-sm font-medium text-gray-900">Delivery #{delivery.id.slice(-6)}</p>
                     <p className="text-xs text-gray-500">
@@ -414,7 +414,7 @@ export function CharityPortalSimple() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left: New Request Form */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-6">New Request</h2>
 
               <form onSubmit={editingId ? handleUpdate : handleSubmit} className="space-y-4">
@@ -466,7 +466,7 @@ export function CharityPortalSimple() {
                   />
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row">
                   <button
                     type="submit"
                     className="flex-1 bg-[#2E7D5E] hover:bg-[#266B50] text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
@@ -490,11 +490,43 @@ export function CharityPortalSimple() {
           {/* Right: My Requests Table */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
+              <div className="px-4 py-4 border-b border-gray-200 sm:px-6">
                 <h2 className="text-xl font-bold text-gray-900">My Requests</h2>
               </div>
 
-              <div className="overflow-x-auto">
+              <div className="divide-y divide-gray-200 md:hidden">
+                {requests.length === 0 ? (
+                  <div className="px-4 py-8 text-center text-sm text-gray-500">
+                    No requests yet. Submit your first request using the form.
+                  </div>
+                ) : (
+                  requests.map((request) => (
+                    <div key={request.id} className="px-4 py-4">
+                      <div className="mb-2 flex items-center justify-between gap-2">
+                        <p className="text-sm font-semibold text-gray-900">{request.item_type}</p>
+                        <span className={`px-2.5 py-1 rounded text-xs font-medium capitalize ${getStatusBadge(request.status)}`}>
+                          {request.status}
+                        </span>
+                      </div>
+                      <div className="space-y-1 text-xs text-gray-600">
+                        <p><span className="font-medium text-gray-700">Quantity:</span> {request.quantity}</p>
+                        <p><span className="font-medium text-gray-700">Delivery:</span> {request.delivery_date || "—"}</p>
+                        <p><span className="font-medium text-gray-700">Notes:</span> {request.notes || "—"}</p>
+                      </div>
+                      {request.status === "pending" && (
+                        <button
+                          onClick={() => handleEdit(request)}
+                          className="mt-3 w-full rounded border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                        >
+                          Edit Request
+                        </button>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="hidden overflow-x-auto md:block">
                 <table className="w-full">
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
@@ -551,7 +583,7 @@ export function CharityPortalSimple() {
 
         {/* Browse Available Goods */}
         <div className="mt-8 bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-cyan-50">
+          <div className="px-4 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-cyan-50 sm:px-6">
             <div className="flex items-center gap-3 mb-1">
               <Package className="text-blue-600" size={24} />
               <h2 className="text-xl font-bold text-gray-900">Browse Available Goods</h2>
@@ -560,7 +592,7 @@ export function CharityPortalSimple() {
           </div>
 
           {/* Filters */}
-          <div className="px-6 py-4 bg-gray-50 border-b border-gray-200 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="px-4 py-4 bg-gray-50 border-b border-gray-200 grid grid-cols-1 gap-4 sm:px-6 md:grid-cols-2">
             <div>
               <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">Category</label>
               <select
@@ -596,7 +628,33 @@ export function CharityPortalSimple() {
           </div>
 
           {/* Inventory Table */}
-          <div className="overflow-x-auto">
+          <div className="divide-y divide-gray-200 md:hidden">
+            {paginatedInventory.length === 0 ? (
+              <div className="px-4 py-8 text-center text-sm text-gray-500">
+                {inventoryItems.length === 0
+                  ? "No inventory items available yet."
+                  : "No items match your search."}
+              </div>
+            ) : (
+              paginatedInventory.map((item) => (
+                <div key={item.id} className="px-4 py-4">
+                  <div className="mb-1 flex items-center justify-between gap-2">
+                    <p className="text-sm font-semibold text-gray-900">{item.category}</p>
+                    <p className="text-sm font-semibold text-gray-900">Qty: {item.quantity}</p>
+                  </div>
+                  <div className="space-y-1 text-xs text-gray-600">
+                    <p><span className="font-medium text-gray-700">Size:</span> {item.size}</p>
+                    <p><span className="font-medium text-gray-700">Color:</span> {item.color || "—"}</p>
+                    <p><span className="font-medium text-gray-700">Condition:</span> {item.condition}</p>
+                    <p><span className="font-medium text-gray-700">Location:</span> {item.location || "—"}</p>
+                    <p><span className="font-medium text-gray-700">Last Updated:</span> {item.lastUpdated ? new Date(item.lastUpdated).toLocaleDateString() : "—"}</p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="hidden overflow-x-auto md:block">
             <table className="w-full">
               <thead className="bg-gradient-to-r from-cyan-50 to-blue-50 border-b border-gray-200">
                 <tr>
@@ -633,7 +691,7 @@ export function CharityPortalSimple() {
             </table>
           </div>
 
-          <div className="px-6 py-4 border-t border-gray-200 bg-white flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div className="px-4 py-4 border-t border-gray-200 bg-white flex flex-col gap-3 sm:px-6 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <span>Rows per page:</span>
               <select
@@ -654,12 +712,12 @@ export function CharityPortalSimple() {
               {totalInventory === 0 ? "0 of 0" : `${inventoryStart + 1}-${inventoryEnd} of ${totalInventory}`}
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 self-start md:self-auto">
               <button
                 type="button"
                 onClick={() => setInventoryPage(Math.max(1, safeInventoryPage - 1))}
                 disabled={safeInventoryPage <= 1}
-                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 text-gray-600 disabled:opacity-40"
+                className="inline-flex h-10 w-10 items-center justify-center rounded border border-gray-300 text-gray-600 disabled:opacity-40"
                 aria-label="Previous inventory page"
               >
                 <ChevronLeft size={16} />
@@ -668,7 +726,7 @@ export function CharityPortalSimple() {
                 type="button"
                 onClick={() => setInventoryPage(Math.min(totalInventoryPages, safeInventoryPage + 1))}
                 disabled={safeInventoryPage >= totalInventoryPages}
-                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 text-gray-600 disabled:opacity-40"
+                className="inline-flex h-10 w-10 items-center justify-center rounded border border-gray-300 text-gray-600 disabled:opacity-40"
                 aria-label="Next inventory page"
               >
                 <ChevronRight size={16} />
