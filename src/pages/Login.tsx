@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Lock, Mail } from "lucide-react";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { useAuth0 } from "../contexts/Auth0Context";
-import { PublicTabs } from "../components/PublicTabs";
 import goodsRecyclingLogo from "../assets/logo.svg";
 
 function getPartnerStatus(email: string): "pending" | "active" | "suspended" | null {
@@ -69,8 +68,6 @@ export function Login() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-emerald-50 via-white to-cyan-50">
-      <PublicTabs />
-
       <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 py-8 sm:px-6">
       <section className="relative w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-xl shadow-emerald-100/40 lg:p-8">
         <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-emerald-100/60 blur-2xl" />
@@ -147,7 +144,7 @@ export function Login() {
             Create Account
           </Link>
           <div className="mt-5 flex flex-col items-center gap-2">
-            <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-28 w-auto" />
+            <img src={goodsRecyclingLogo} alt="" className="h-28 w-auto" />
             <span className="text-2xl font-extrabold text-gray-900 tracking-wide">Goods Reclyign</span>
           </div>
         </div>
