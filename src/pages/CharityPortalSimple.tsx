@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { Package, FileText, Calendar, MessageSquare, Truck, Search, ChevronLeft, ChevronRight, Repeat, CalendarX2 } from "lucide-react";
 import { triggerGoogleSheetsSync } from "../utils/googleSheetsSync";
-import goodsRecyclingLogo from "../assets/logo.svg";
 import { INVENTORY_CATEGORIES } from "../constants/inventory";
 
 interface Request {
@@ -283,9 +282,8 @@ export function CharityPortalSimple() {
       <div className="bg-white/95 border-b border-slate-300 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3 sm:gap-4">
-            <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-14 w-auto md:h-16" />
+            <img src="/favicon.svg" alt="" className="h-12 w-auto md:h-14" />
             <div>
-              <div className="text-lg font-extrabold text-gray-900 sm:text-xl md:text-2xl tracking-wide">Goods Recycling</div>
               <p className="text-xs text-gray-400">Welcome, {user?.name || user?.email}</p>
             </div>
           </div>
@@ -419,7 +417,7 @@ export function CharityPortalSimple() {
         <div className="mb-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <div className="px-4 py-4 border-b border-gray-200 flex flex-col gap-3 sm:px-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
-              <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-12 w-auto sm:h-14" />
+              <img src="/favicon.svg" alt="" className="h-10 w-auto sm:h-12" />
               <div>
               <h2 className="text-lg font-bold text-gray-900">Delivery Schedule</h2>
               <p className="text-xs text-gray-500">Partners can view the same live schedule from their portal side</p>
@@ -632,7 +630,7 @@ export function CharityPortalSimple() {
               <Package className="text-blue-600" size={24} />
               <h2 className="text-xl font-bold text-gray-900">Browse Available Goods</h2>
             </div>
-            <p className="text-sm text-gray-600">View current inventory at Goods Recycling warehouse</p>
+            <p className="text-sm text-gray-600">View current inventory at the warehouse</p>
           </div>
 
           {/* Filters */}
