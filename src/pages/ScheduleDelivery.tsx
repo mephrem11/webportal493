@@ -89,12 +89,12 @@ export function ScheduleDelivery() {
         </button>
 
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="bg-gradient-to-r from-[#00D084] to-[#00C878] px-8 py-6">
+          <div className="bg-gray-100 border-b border-gray-200 px-8 py-6">
             <div className="flex items-center gap-3">
-              <Calendar size={28} className="text-black" />
+              <Calendar size={28} className="text-gray-700" />
               <div>
-                <h1 className="text-2xl font-bold text-black">Schedule Weekly Delivery</h1>
-                <p className="text-black/80 text-sm">
+                <h1 className="text-2xl font-bold text-gray-900">Schedule Weekly Delivery</h1>
+                <p className="text-gray-600 text-sm">
                   Set a recurring weekly pickup time for your organization
                 </p>
               </div>

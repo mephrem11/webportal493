@@ -103,12 +103,12 @@ export function WeeklySchedule() {
         </div>
 
         {/* Weekly Calendar */}
-        <div className="bg-gradient-to-r from-[#00D084] to-[#00C878] text-white rounded-t-lg px-6 py-4">
+        <div className="bg-gray-100 border border-gray-200 rounded-t-lg px-6 py-4">
           <div className="flex items-center gap-3">
-            <Calendar size={24} />
+            <Calendar size={24} className="text-gray-700" />
             <div>
-              <h2 className="text-xl font-bold">Weekly Delivery Calendar</h2>
-              <p className="text-sm text-white/90">Next scheduled delivery times</p>
+              <h2 className="text-xl font-bold text-gray-900">Weekly Delivery Calendar</h2>
+              <p className="text-sm text-gray-600">Next scheduled delivery times</p>
             </div>
           </div>
         </div>
