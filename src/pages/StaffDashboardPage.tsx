@@ -554,7 +554,7 @@ export function StaffDashboardPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => window.open("/deliveries", "_blank", "noopener,noreferrer")}
+                    onClick={() => window.open("/", "_blank", "noopener,noreferrer")}
                     className="rounded-lg border border-[#00C853] bg-[#00C853] px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-[#00B248]"
                   >
                     Open Customer Tab
