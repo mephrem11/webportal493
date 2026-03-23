@@ -89,7 +89,7 @@ export function DeliveryConfirmationPage() {
         <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
           <h1 className="text-2xl font-bold text-gray-900">Delivery Confirmation</h1>
           <p className="mt-2 text-sm text-gray-600">
-            Confirm completed deliveries so both partner and staff dashboards stay in sync.
+            Confirm completed deliveries that were created in Schedule Weekly Delivery so both partner and staff dashboards stay in sync.
           </p>
         </div>
 
@@ -138,7 +138,7 @@ export function DeliveryConfirmationPage() {
         <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-4">
           <p className="flex items-start gap-2 text-xs text-blue-900">
             <AlertCircle size={15} className="mt-0.5" />
-            Confirming a delivery marks it as completed and updates both shared delivery data stores.
+            Confirming a delivery marks a scheduled pickup as completed and updates shared delivery tracking for both roles.
           </p>
         </div>
       </div>

@@ -340,12 +340,12 @@ export function CharityPortalSimple() {
 
           <Link
             to="/schedule-delivery"
-            className="flex items-center gap-3 rounded-lg border border-cyan-300 bg-cyan-100 p-4 text-cyan-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-cyan-200 hover:shadow-lg"
+            className="flex items-center gap-3 rounded-lg border border-cyan-300 bg-cyan-100 p-4 text-gray-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-cyan-200 hover:shadow-lg"
           >
-            <Calendar size={24} className="text-cyan-700" />
+            <Calendar size={24} className="text-gray-900" />
             <div>
-              <div className="font-semibold">Schedule Delivery</div>
-              <div className="text-xs text-cyan-800">Set up delivery</div>
+              <div className="font-semibold text-gray-950">Schedule Weekly Delivery</div>
+              <div className="text-xs text-gray-900">Set a recurring weekly pickup time for your organization</div>
             </div>
           </Link>
 
@@ -400,18 +400,7 @@ export function CharityPortalSimple() {
             <Truck size={24} className="text-lime-700" />
             <div>
               <div className="font-semibold">Delivery Confirmation</div>
-              <div className="text-xs text-lime-800">Confirm completed deliveries</div>
-            </div>
-          </Link>
-
-          <Link
-            to="/closed-dates"
-            className="flex items-center gap-3 rounded-lg border border-rose-300 bg-rose-100 p-4 text-rose-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-rose-200 hover:shadow-lg"
-          >
-            <Calendar size={24} className="text-rose-700" />
-            <div>
-              <div className="font-semibold">Closed Dates</div>
-              <div className="text-xs text-rose-800">Holiday and blackout dates</div>
+              <div className="text-xs text-lime-800">Confirm completed deliveries for scheduled pickups</div>
             </div>
           </Link>
         </div>

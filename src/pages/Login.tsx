@@ -3,8 +3,25 @@ import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { useAuth0 } from "../contexts/Auth0Context";
-import goodsRecyclingLogo from "../assets/logo.svg";
 import { PublicTabs } from "../components/PublicTabs";
+
+const RELEASE_CRITERIA = [
+  "Smooth login for charity users",
+  "Requests appear in system",
+  "Requests can be edited",
+  "Sponsor approves portal usability",
+];
+
+const FUNCTIONAL_REQUIREMENTS = [
+  "Charity login system",
+  "Submit request form",
+  "Edit request capability",
+  "Request status tracking",
+  "Role-based access control (charities only see their data)",
+  "Data syncing to Google Sheets",
+  "Delivery dates viewable on portal",
+  "Strong security practices for web and mobile authentication",
+];
 
 function getPartnerStatus(email: string): "pending" | "active" | "suspended" | null {
   const normalized = email.trim().toLowerCase();
@@ -76,22 +93,11 @@ export function Login() {
           <h1 className="mb-2 text-3xl font-bold text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif" }}>
             Charity Partner Portal
           </h1>
-          <p className="text-sm text-gray-600 sm:text-base">Secure, simple sign-in for charity partners and administrators.</p>
+          <p className="text-sm text-gray-600 sm:text-base">One secure login for both staff administrators and charity partners.</p>
         </div>
 
-        <div className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
-          <Link
-            to="/login"
-            className="rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center text-sm font-semibold text-emerald-800 hover:bg-emerald-100"
-          >
-            Charity Partner Login
-          </Link>
-          <Link
-            to="/staff/login"
-            className="rounded-lg border border-blue-300 bg-blue-50 px-4 py-2.5 text-center text-sm font-semibold text-blue-800 hover:bg-blue-100"
-          >
-            Administrator Login
-          </Link>
+        <div className="mb-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+          Use this same login form for both roles. Administrators are redirected to staff dashboard, and charity partners are redirected to the charity portal.
         </div>
 
         {error && (
@@ -162,28 +168,50 @@ export function Login() {
           </div>
         )}
 
-        <div className="mt-6 p-2 text-center">
-          <img
-            src={goodsRecyclingLogo}
-            alt="Goods Recycling logo"
-            className="mx-auto h-24 w-auto"
-          />
-        </div>
       </section>
 
       <section className="w-full rounded-2xl border border-cyan-100 bg-white p-6 shadow-sm lg:w-1/2 lg:p-8">
-        <h2 className="text-2xl font-bold text-cyan-900">Portal Scope and Release Criteria</h2>
+        <h2 className="text-2xl font-bold text-cyan-900">Charity Partner Portal Requirements</h2>
         <p className="mt-3 text-sm leading-7 text-gray-700">
-          High-priority product for charity partners to log in, submit requests, edit recurring wish lists, track
-          request status, and view weekly delivery schedules while staff and sorting teams manage updates.
+          Description: allows charity partners to log in, submit requests for items, and track request status through a web portal.
+          Priority: high (highest business value).
         </p>
 
-        <div className="mt-5 grid grid-cols-1 gap-3 text-sm text-gray-800">
-          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Smooth login for charity users and administrators</div>
-          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Requests appear in system and can be edited</div>
-          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Role-based access so charities only see their data</div>
-          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Delivery dates and status are viewable through portal tools</div>
-          <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">Google Sheets syncing remains enabled for operational reporting</div>
+        <div className="mt-5 rounded-xl border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-bold uppercase tracking-wide text-gray-800">Stimulus / Response Sequence</h3>
+          <p className="mt-2 text-sm leading-6 text-gray-700">
+            Charity logs in, submits request, system stores request, sorting team views request, request status updates,
+            sponsor schedules deliveries, and charities see delivery dates.
+          </p>
+        </div>
+
+        <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
+          <h3 className="text-sm font-bold uppercase tracking-wide text-gray-800">Feature Release Criteria</h3>
+          <ul className="mt-3 grid grid-cols-1 gap-2 text-sm text-gray-800">
+            {RELEASE_CRITERIA.map((item) => (
+              <li key={item} className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-2">{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
+          <h3 className="text-sm font-bold uppercase tracking-wide text-gray-800">Functional Requirements</h3>
+          <ul className="mt-3 grid grid-cols-1 gap-2 text-sm text-gray-800">
+            {FUNCTIONAL_REQUIREMENTS.map((item) => (
+              <li key={item} className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-2">{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-4 rounded-xl border border-indigo-200 bg-indigo-50 p-4">
+          <h3 className="text-sm font-bold uppercase tracking-wide text-indigo-900">Software and Coexistence</h3>
+          <p className="mt-2 text-sm text-indigo-950">
+            Google Sheets and Google Drive are used for storage and reporting, web browsers provide portal access,
+            and integration can coexist with eBay platform/API data workflows.
+          </p>
+          <p className="mt-2 text-sm text-indigo-950">
+            The portal structure is component-based so this framework can be reused in other web application solutions.
+          </p>
         </div>
 
         <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4">

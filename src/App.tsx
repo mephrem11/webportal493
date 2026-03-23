@@ -15,7 +15,6 @@ import { WeeklySchedule } from "./pages/WeeklySchedule";
 import { SubmitSupportRequest } from "./pages/SubmitSupportRequest";
 import { StaffSupportRequests } from "./pages/StaffSupportRequests";
 import { StaffManageRequests } from "./pages/StaffManageRequests";
-import { StaffLogin } from "./pages/StaffLogin";
 import { StaffInventory } from "./pages/StaffInventory";
 import { SponsorSignature } from "./pages/SponsorSignature";
 import { SheetsConfig } from "./pages/SheetsConfig";
@@ -36,7 +35,6 @@ import { AboutPage } from "./pages/AboutPage";
 import { HowItWorksPage } from "./pages/HowItWorksPage";
 import { DonationBinPage } from "./pages/DonationBinPage";
 import { DeliveryConfirmationPage } from "./pages/DeliveryConfirmationPage";
-import { ClosedDatesPage } from "./pages/ClosedDatesPage";
 
 function App() {
   return (
@@ -52,7 +50,6 @@ function App() {
       <Route path="/how-it-works" element={<HowItWorksPage />} />
       <Route path="/donation-bin" element={<DonationBinPage />} />
       <Route path="/delivery-confirmations" element={<DeliveryConfirmationPage />} />
-      <Route path="/closed-dates" element={<ClosedDatesPage />} />
 
       {/* Partner Portal */}
       <Route path="/portal" element={<CharityPortalSimple />} />
@@ -81,7 +78,7 @@ function App() {
       <Route path="/schedule-delivery" element={<ScheduleDelivery />} />
 
       {/* Staff */}
-      <Route path="/staff/login" element={<StaffLogin />} />
+      <Route path="/staff/login" element={<Login />} />
       <Route path="/staff/dashboard" element={<StaffDashboardPage />} />
       <Route path="/staff/change-password" element={<StaffChangePassword />} />
       <Route path="/staff/inventory" element={<StaffInventory />} />
