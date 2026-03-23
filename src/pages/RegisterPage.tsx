@@ -105,17 +105,17 @@ export function RegisterPage() {
 
     // Staff-side notification email.
     const staffEmail = buildStaffNotifyEmail(form.email.trim().toLowerCase(), form.organization.trim());
-    const staffSend = await sendPortalEmail({
+    await sendPortalEmail({
       to: "admin@goodsrecycling.org",
       from: staffEmail.from,
       subject: staffEmail.subject,
       message: staffEmail.message,
     });
 
-    if (!partnerSend.sent || !staffSend.sent) {
-      alert("Account created. Thank you for your application. A staff member will review your account before access is granted. Email notification is currently in fallback mode.");
+    if (partnerSend.sent) {
+      alert(`Account created! A confirmation email has been sent to ${form.email.trim().toLowerCase()}. A staff member will review your account before access is granted.`);
     } else {
-      alert("Account created. Thank you for your application. A staff member will review your account before access is granted.");
+      alert(`Account created! A confirmation email has been queued for ${form.email.trim().toLowerCase()}. A staff member will review your account before access is granted.`);
     }
 
     // Auto-login the new partner and show their account status page

@@ -64,3 +64,43 @@ export function buildStaffNotifyEmail(partnerEmail: string, organization: string
       `A new partner account was submitted by ${partnerEmail} (${organization}). Please review and confirm this account right away.`,
   };
 }
+
+export function buildPartnerApprovedEmail(name: string): { from: string; subject: string; message: string } {
+  return {
+    from: "noreply@goodsrecycling.org",
+    subject: "Your Goods Recycling partner account has been approved!",
+    message: `Hi ${name || "Partner"},\n\nGreat news! Your Goods Recycling partner account has been reviewed and approved. You can now log in and access the full charity partner portal.\n\nThank you,\nGoods Recycling Team`,
+  };
+}
+
+export function buildPartnerDeclinedEmail(name: string): { from: string; subject: string; message: string } {
+  return {
+    from: "noreply@goodsrecycling.org",
+    subject: "Update on your Goods Recycling partner account",
+    message: `Hi ${name || "Partner"},\n\nAfter reviewing your partner account submission, we are unable to approve it at this time. Please contact us if you have questions.\n\nThank you,\nGoods Recycling Team`,
+  };
+}
+
+export function buildRequestApprovedEmail(name: string, requestTitle: string): { from: string; subject: string; message: string } {
+  return {
+    from: "noreply@goodsrecycling.org",
+    subject: "Your request has been approved",
+    message: `Hi ${name || "Partner"},\n\nYour request "${requestTitle}" has been approved by our staff. We will be in touch regarding fulfillment.\n\nThank you,\nGoods Recycling Team`,
+  };
+}
+
+export function buildRequestCancelledEmail(name: string, requestTitle: string): { from: string; subject: string; message: string } {
+  return {
+    from: "noreply@goodsrecycling.org",
+    subject: "Your request has been cancelled",
+    message: `Hi ${name || "Partner"},\n\nYour request "${requestTitle}" has been cancelled. Please contact us if you have any questions.\n\nThank you,\nGoods Recycling Team`,
+  };
+}
+
+export function buildRequestFulfilledEmail(name: string, requestTitle: string): { from: string; subject: string; message: string } {
+  return {
+    from: "noreply@goodsrecycling.org",
+    subject: "Your request has been fulfilled",
+    message: `Hi ${name || "Partner"},\n\nWe are pleased to let you know that your request "${requestTitle}" has been marked as fulfilled. Thank you for partnering with us!\n\nGoods Recycling Team`,
+  };
+}
