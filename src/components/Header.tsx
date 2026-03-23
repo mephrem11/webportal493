@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
-import logo from "../assets/logo.svg";
 
 export function Header() {
   const { user, isAdmin, logout } = useSimpleAuth();
@@ -15,7 +14,7 @@ export function Header() {
     <header className="bg-white border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         <Link to={isAdmin ? "/staff/dashboard" : "/portal"} className="flex items-center gap-2">
-          <img src={logo} alt="Goods Recycling" className="h-14 w-auto" />
+          <img src="/favicon.svg" alt="" className="h-11 w-auto" />
         </Link>
 
         <nav className="flex items-center gap-4 text-sm">
