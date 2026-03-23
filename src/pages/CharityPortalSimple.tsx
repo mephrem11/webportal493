@@ -283,10 +283,11 @@ export function CharityPortalSimple() {
       <div className="bg-white/95 border-b border-slate-300 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3 sm:gap-4">
-            <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-16 w-auto md:h-20" />
+            <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-14 w-auto md:h-16" />
             <div>
-            <h1 className="text-xl font-bold text-gray-900 sm:text-2xl md:text-3xl">Charity Partner Portal</h1>
-            <p className="text-xs text-gray-500 sm:text-sm">Welcome, {user?.name || user?.email}</p>
+              <div className="text-lg font-extrabold text-gray-900 sm:text-xl md:text-2xl tracking-wide">Goods Recycling</div>
+              <div className="text-xs font-semibold text-gray-500 sm:text-sm">Charity Partner Portal</div>
+              <p className="text-xs text-gray-400">Welcome, {user?.name || user?.email}</p>
             </div>
           </div>
           <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-3 md:w-auto md:flex md:items-center md:gap-3">
