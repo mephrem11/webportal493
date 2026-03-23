@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Calendar, MapPin, Clock, CheckCircle } from "lucide-react";
 import { AddressAutocomplete } from "../components/AddressAutocomplete";
 import { triggerGoogleSheetsSync } from "../utils/googleSheetsSync";
 
 export function ScheduleDelivery() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const editId = searchParams.get("edit");
+
   const [form, setForm] = useState({
     day: "Monday",
     startTime: "10:00",
@@ -18,27 +21,62 @@ export function ScheduleDelivery() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (editId) {
+      try {
+        const draft = JSON.parse(localStorage.getItem("edit_delivery_draft") || "null");
+        if (draft) {
+          setForm({
+            day: draft.day || "Monday",
+            startTime: draft.startTime || "10:00",
+            endTime: draft.endTime || "12:00",
+            address: draft.address || "",
+            contactName: draft.contactName || "",
+            contactPhone: draft.contactPhone || "",
+            notes: draft.notes || "",
+          });
+          localStorage.removeItem("edit_delivery_draft");
+        }
+      } catch { /* ignore */ }
+    }
+  }, [editId]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
     await new Promise((r) => setTimeout(r, 800));
 
-    const existing = JSON.parse(localStorage.getItem("scheduled_deliveries") || "[]");
-    const partnerDeliveries = JSON.parse(localStorage.getItem("partner_deliveries") || "[]");
-    const newDelivery = {
-      id: Date.now().toString(),
-      ...form,
-      scheduledDate: new Date().toISOString(),
-      items: [],
-      status: "scheduled",
-      createdAt: new Date().toISOString(),
-    };
-    existing.push(newDelivery);
-    partnerDeliveries.push(newDelivery);
-    localStorage.setItem("scheduled_deliveries", JSON.stringify(existing));
-    localStorage.setItem("partner_deliveries", JSON.stringify(partnerDeliveries));
+    if (editId) {
+      // Update existing delivery
+      try {
+        const existing = JSON.parse(localStorage.getItem("scheduled_deliveries") || "[]") as Array<Record<string, unknown>>;
+        const updated = existing.map((d) => d.id === editId ? { ...d, ...form } : d);
+        localStorage.setItem("scheduled_deliveries", JSON.stringify(updated));
+      } catch { /* ignore */ }
+      try {
+        const pd = JSON.parse(localStorage.getItem("partner_deliveries") || "[]") as Array<Record<string, unknown>>;
+        const updatedPd = pd.map((d) => d.id === editId ? { ...d, ...form } : d);
+        localStorage.setItem("partner_deliveries", JSON.stringify(updatedPd));
+      } catch { /* ignore */ }
+    } else {
+      const existing = JSON.parse(localStorage.getItem("scheduled_deliveries") || "[]");
+      const partnerDeliveries = JSON.parse(localStorage.getItem("partner_deliveries") || "[]");
+      const newDelivery = {
+        id: Date.now().toString(),
+        ...form,
+        scheduledDate: new Date().toISOString(),
+        items: [],
+        status: "scheduled",
+        createdAt: new Date().toISOString(),
+      };
+      existing.push(newDelivery);
+      partnerDeliveries.push(newDelivery);
+      localStorage.setItem("scheduled_deliveries", JSON.stringify(existing));
+      localStorage.setItem("partner_deliveries", JSON.stringify(partnerDeliveries));
+    }
     void triggerGoogleSheetsSync("delivery_created");
+    window.dispatchEvent(new Event("inventoryUpdated"));
 
     setSubmitting(false);
     setSubmitted(true);
@@ -51,10 +89,9 @@ export function ScheduleDelivery() {
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle size={32} className="text-green-500" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Delivery Scheduled!</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{editId ? "Delivery Updated!" : "Delivery Scheduled!"}</h2>
           <p className="text-gray-600 mb-2">
-            Your weekly delivery for <strong>{form.day}</strong> has been scheduled.
-          </p>
+            Your weekly delivery for <strong>{form.day}</strong> has been {editId ? "updated" : "scheduled"}.</p>
           <p className="text-gray-500 text-sm mb-6">
             {form.startTime} – {form.endTime} at {form.address}
           </p>
@@ -93,9 +130,9 @@ export function ScheduleDelivery() {
             <div className="flex items-center gap-3">
               <Calendar size={28} className="text-gray-700" />
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Schedule Weekly Delivery</h1>
+                <h1 className="text-2xl font-bold text-gray-900">{editId ? "Edit Delivery" : "Schedule Weekly Delivery"}</h1>
                 <p className="text-gray-600 text-sm">
-                  Set a recurring weekly pickup time for your organization
+                  {editId ? "Update the details for this delivery" : "Set a recurring weekly pickup time for your organization"}
                 </p>
               </div>
             </div>

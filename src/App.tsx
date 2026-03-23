@@ -35,6 +35,7 @@ import { AboutPage } from "./pages/AboutPage";
 import { HowItWorksPage } from "./pages/HowItWorksPage";
 import { DonationBinPage } from "./pages/DonationBinPage";
 import { DeliveryConfirmationPage } from "./pages/DeliveryConfirmationPage";
+import { ClosedDatesPage } from "./pages/ClosedDatesPage";
 
 function App() {
   return (
@@ -50,7 +51,7 @@ function App() {
       <Route path="/how-it-works" element={<HowItWorksPage />} />
       <Route path="/donation-bin" element={<DonationBinPage />} />
       <Route path="/delivery-confirmations" element={<DeliveryConfirmationPage />} />
-      <Route path="/closed-dates" element={<Navigate to="/weekly-schedule" replace />} />
+      <Route path="/closed-dates" element={<ClosedDatesPage />} />
 
       {/* Partner Portal */}
       <Route path="/portal" element={<CharityPortalSimple />} />

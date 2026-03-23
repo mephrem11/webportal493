@@ -273,7 +273,7 @@ function readCustomersFromStorage(): CustomerRecord[] {
 export function StaffDashboardPage() {
   const { user, logout, isAdmin } = useSimpleAuth();
   const navigate = useNavigate();
-  const [requests] = useState<Request[]>(getStoredRequests);
+  const [requests, setRequests] = useState<Request[]>(getStoredRequests);
   const [inventorySummary, setInventorySummary] = useState<InventorySummary[]>(buildInventorySummary);
   type TabName = "overview" | "customers" | "partners" | "requests" | "support" | "staff";
   const [activeTab, setActiveTab] = useState<TabName>("overview");
@@ -921,7 +921,7 @@ export function StaffDashboardPage() {
                 {requests.slice(0, 10).map((req) => (
                   <div
                     key={req.id}
-                    className="bg-white rounded-xl shadow border border-gray-100 p-4 flex items-center justify-between"
+                    className="bg-white rounded-xl shadow border border-gray-100 p-4 flex items-center justify-between gap-3 flex-wrap"
                   >
                     <div>
                       <p className="font-semibold text-gray-900">
@@ -931,19 +931,66 @@ export function StaffDashboardPage() {
                         {new Date(req.createdAt).toLocaleDateString()}
                       </p>
                     </div>
-                    <span
-                      className={`text-xs px-2.5 py-1 rounded-full font-medium capitalize ${
-                        req.status === "pending"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : req.status === "approved"
-                          ? "bg-blue-100 text-blue-700"
-                          : req.status === "fulfilled"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {req.status}
-                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span
+                        className={`text-xs px-2.5 py-1 rounded-full font-medium capitalize ${
+                          req.status === "pending"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : req.status === "approved" || req.status === "scheduled"
+                            ? "bg-blue-100 text-blue-700"
+                            : req.status === "fulfilled"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {req.status}
+                      </span>
+                      {req.status === "pending" && (
+                        <>
+                          <button
+                            onClick={() => {
+                              try {
+                                const all = JSON.parse(localStorage.getItem("simple_requests") || "[]") as Array<Record<string, unknown>>;
+                                const updated = all.map((r) => String(r.id) === String(req.id) ? { ...r, status: "approved" } : r);
+                                localStorage.setItem("simple_requests", JSON.stringify(updated));
+                                setRequests((prev) => prev.map((r) => r.id === req.id ? { ...r, status: "approved" } : r));
+                              } catch { /* ignore */ }
+                            }}
+                            className="text-xs px-2.5 py-1 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors font-medium"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() => {
+                              try {
+                                const all = JSON.parse(localStorage.getItem("simple_requests") || "[]") as Array<Record<string, unknown>>;
+                                const updated = all.map((r) => String(r.id) === String(req.id) ? { ...r, status: "cancelled" } : r);
+                                localStorage.setItem("simple_requests", JSON.stringify(updated));
+                                setRequests((prev) => prev.map((r) => r.id === req.id ? { ...r, status: "cancelled" } : r));
+                              } catch { /* ignore */ }
+                            }}
+                            className="text-xs px-2.5 py-1 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors font-medium"
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      )}
+                      {(req.status === "approved" || req.status === "scheduled") && (
+                        <button
+                          onClick={() => {
+                            try {
+                              const all = JSON.parse(localStorage.getItem("simple_requests") || "[]") as Array<Record<string, unknown>>;
+                              const updated = all.map((r) => String(r.id) === String(req.id) ? { ...r, status: "fulfilled" } : r);
+                              localStorage.setItem("simple_requests", JSON.stringify(updated));
+                              setRequests((prev) => prev.map((r) => r.id === req.id ? { ...r, status: "fulfilled" } : r));
+                            } catch { /* ignore */ }
+                          }}
+                          className="text-xs px-2.5 py-1 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors font-medium"
+                        >
+                          Mark Fulfilled
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>

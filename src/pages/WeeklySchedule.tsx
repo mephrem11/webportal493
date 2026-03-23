@@ -75,6 +75,35 @@ export function WeeklySchedule() {
     return readDeliveries();
   }, [refreshToken]);
 
+  function handleEdit(id: string) {
+    const raw = (() => {
+      try {
+        return JSON.parse(localStorage.getItem("scheduled_deliveries") || "[]") as StoredDelivery[];
+      } catch { return []; }
+    })();
+    const entry = raw.find((d) => d.id === id);
+    if (entry) {
+      localStorage.setItem("edit_delivery_draft", JSON.stringify(entry));
+    }
+    navigate(`/schedule-delivery?edit=${id}`);
+  }
+
+  function handleCancel(id: string) {
+    if (!confirm("Cancel this delivery?")) return;
+    try {
+      const raw = JSON.parse(localStorage.getItem("scheduled_deliveries") || "[]") as StoredDelivery[];
+      const updated = raw.map((d) => d.id === id ? { ...d, status: "cancelled" } : d);
+      localStorage.setItem("scheduled_deliveries", JSON.stringify(updated));
+    } catch { /* ignore */ }
+    try {
+      const raw2 = JSON.parse(localStorage.getItem("partner_deliveries") || "[]") as StoredDelivery[];
+      const updated2 = raw2.map((d) => d.id === id ? { ...d, status: "cancelled" } : d);
+      localStorage.setItem("partner_deliveries", JSON.stringify(updated2));
+    } catch { /* ignore */ }
+    setRefreshToken((prev) => prev + 1);
+    window.dispatchEvent(new Event("inventoryUpdated"));
+  }
+
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   return (
@@ -146,13 +175,17 @@ export function WeeklySchedule() {
                             </div>
                           </div>
                           <div className="flex gap-2">
-                            <button className="flex items-center gap-1 px-3 py-1.5 border-2 border-blue-500 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-semibold">
+                            <button
+                              onClick={() => handleEdit(delivery.id)}
+                              className="flex items-center gap-1 px-3 py-1.5 border-2 border-blue-500 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-semibold">
                               <Pencil size={14} />
                               Edit
                             </button>
-                            <button className="flex items-center gap-1 px-3 py-1.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-semibold">
+                            <button
+                              onClick={() => handleCancel(delivery.id)}
+                              className="flex items-center gap-1 px-3 py-1.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-semibold">
                               <Trash2 size={14} />
-                              Delete
+                              Cancel
                             </button>
                           </div>
                         </div>
