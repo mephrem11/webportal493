@@ -340,9 +340,9 @@ export function CharityPortalSimple() {
 
           <Link
             to="/schedule-delivery"
-            className="flex items-center gap-3 rounded-lg border border-cyan-300 bg-cyan-100 p-4 text-gray-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-cyan-200 hover:shadow-lg"
+            className="flex items-center gap-3 rounded-lg border border-cyan-400 bg-cyan-300 p-4 text-gray-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-cyan-400 hover:shadow-lg"
           >
-            <Calendar size={24} className="text-gray-900" />
+            <Calendar size={24} className="text-black" />
             <div>
               <div className="font-semibold text-black">Schedule Weekly Delivery</div>
               <div className="text-xs text-black">Set a recurring weekly pickup time for your organization</div>
