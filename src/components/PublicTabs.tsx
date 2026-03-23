@@ -2,9 +2,6 @@ import { NavLink } from "react-router-dom";
 
 const tabs = [
   { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/how-it-works", label: "How It Works" },
-  { to: "/donation-bin", label: "Donation Bin" },
 ];
 
 export function PublicTabs() {
