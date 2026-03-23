@@ -344,8 +344,8 @@ export function CharityPortalSimple() {
           >
             <Calendar size={24} className="text-gray-900" />
             <div>
-              <div className="font-semibold text-gray-950">Schedule Weekly Delivery</div>
-              <div className="text-xs text-gray-900">Set a recurring weekly pickup time for your organization</div>
+              <div className="font-semibold text-black">Schedule Weekly Delivery</div>
+              <div className="text-xs text-black">Set a recurring weekly pickup time for your organization</div>
             </div>
           </Link>
 
