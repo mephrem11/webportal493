@@ -50,6 +50,7 @@ function App() {
       <Route path="/how-it-works" element={<HowItWorksPage />} />
       <Route path="/donation-bin" element={<DonationBinPage />} />
       <Route path="/delivery-confirmations" element={<DeliveryConfirmationPage />} />
+      <Route path="/closed-dates" element={<Navigate to="/weekly-schedule" replace />} />
 
       {/* Partner Portal */}
       <Route path="/portal" element={<CharityPortalSimple />} />

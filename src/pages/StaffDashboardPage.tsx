@@ -289,7 +289,7 @@ export function StaffDashboardPage() {
 
   useEffect(() => {
     if (!user?.email) {
-      navigate("/staff/login");
+      navigate("/login");
       return;
     }
 
@@ -1024,7 +1024,7 @@ export function StaffDashboardPage() {
               </div>
               <p className="text-xs text-gray-500 mb-4">
                 They will receive the temporary password <span className="font-mono font-semibold text-gray-700">admin123</span> and can change it after first login at{" "}
-                <span className="font-mono text-gray-700">/staff/login</span>. Any valid email domain is allowed (Gmail, Yahoo, Hotmail, company email, etc.).
+                <span className="font-mono text-gray-700">/login</span>. Any valid email domain is allowed (Gmail, Yahoo, Hotmail, company email, etc.).
               </p>
 
               {inviteMsg && (
