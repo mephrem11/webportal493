@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Lock, Mail, ShieldCheck } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { useAuth0 } from "../contexts/Auth0Context";
 import { PublicTabs } from "../components/PublicTabs";
@@ -76,11 +76,7 @@ export function Login() {
         <div className="pointer-events-none absolute -left-12 -bottom-12 h-28 w-28 rounded-full bg-cyan-100/70 blur-xl" />
 
         <div className="relative mb-6">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-800">
-            <ShieldCheck size={14} />
-            Unified Access
-          </div>
-          <h1 className="mb-2 text-3xl font-bold text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif" }}>
+          <h1 className="mb-2 text-4xl font-bold text-gray-900 sm:text-5xl" style={{ fontFamily: "Playfair Display, serif" }}>
             Sign In
           </h1>
           <p className="text-sm text-gray-600 sm:text-base">One secure login for staff administrators and charity partners.</p>
