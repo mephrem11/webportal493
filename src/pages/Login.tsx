@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Lock, Mail } from "lucide-react";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { useAuth0 } from "../contexts/Auth0Context";
-import goodsRecyclingLogo from "../assets/logo.svg";
 
 function getPartnerStatus(email: string): "pending" | "active" | "suspended" | null {
   const normalized = email.trim().toLowerCase();
@@ -68,15 +67,6 @@ export function Login() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-emerald-50 via-white to-cyan-50">
-      {/* Top-left branding */}
-      <div className="w-full px-6 py-5 sm:px-10">
-        <div className="flex items-center gap-4">
-          <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-24 w-auto sm:h-28" />
-          <div className="flex flex-col">
-            <span className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif", letterSpacing: "-0.02em" }}>Goods Recycling</span>
-          </div>
-        </div>
-      </div>
       <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 pb-8 sm:px-6">
       <section className="relative w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-xl shadow-emerald-100/40 lg:p-8">
         <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-emerald-100/60 blur-2xl" />
@@ -151,10 +141,6 @@ export function Login() {
           >
             Create Account
           </Link>
-          <div className="mt-5 flex flex-col items-center gap-3">
-            <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-40 w-auto" />
-            <span className="text-4xl font-extrabold text-gray-900 tracking-tight" style={{ fontFamily: "Playfair Display, serif" }}>Goods Recycling</span>
-          </div>
         </div>
 
         {isAuth0Configured && (
@@ -168,10 +154,6 @@ export function Login() {
             </button>
           </div>
         )}
-
-        <div className="mt-6 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-xs text-gray-600">
-          Secure authentication with role-based access control is active for both staff and charity partners.
-        </div>
 
       </section>
       </div>
