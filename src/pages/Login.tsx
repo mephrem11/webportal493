@@ -1,0 +1,174 @@
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSimpleAuth } from "../contexts/SimpleAuthContext";
+import { useAuth0 } from "../contexts/Auth0Context";
+import goodsRecyclingLogo from "../assets/logo.svg";
+
+function getPartnerStatus(email: string): "pending" | "active" | "suspended" | null {
+  const normalized = email.trim().toLowerCase();
+  try {
+    const accounts = JSON.parse(localStorage.getItem("user_accounts") || "[]") as Array<{ email: string; status?: string }>;
+    const account = accounts.find((a) => a.email.toLowerCase() === normalized);
+    if (account?.status === "pending" || account?.status === "active" || account?.status === "suspended") {
+      return account.status;
+    }
+  } catch { /* ignore */ }
+  try {
+    const users = JSON.parse(localStorage.getItem("mock_users") || "[]") as Array<{ email: string; status?: string }>;
+    const user = users.find((u) => u.email.toLowerCase() === normalized);
+    if (user?.status === "pending" || user?.status === "active" || user?.status === "suspended") {
+      return user.status;
+    }
+  } catch { /* ignore */ }
+  return null;
+}
+
+export function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useSimpleAuth();
+  const { loginWithAuth0, isConfigured: isAuth0Configured } = useAuth0();
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      await login(email, password);
+      const userStr = localStorage.getItem("user_session");
+      if (userStr) {
+        const user = JSON.parse(userStr) as { role?: string; email?: string };
+        if (user.role === "admin") {
+          navigate("/staff/dashboard");
+        } else if (user.role === "charity_partner") {
+          const status = user.email ? getPartnerStatus(user.email) : null;
+          if (status === "pending" || status === "suspended") {
+            navigate("/my-account");
+          } else {
+            navigate("/portal");
+          }
+        } else {
+          navigate("/");
+        }
+      } else {
+        navigate("/portal");
+      }
+    } catch {
+      setError("Invalid email or password");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="flex min-h-screen flex-col bg-gray-100 px-4">
+      <div className="flex flex-1 items-center justify-center py-8">
+      <div className="w-full max-w-md rounded-2xl bg-white p-10 shadow-lg">
+        <div className="mb-8">
+          <h1 className="mb-1 text-4xl font-bold text-gray-900" style={{ fontFamily: "Playfair Display, serif" }}>
+            CharityPortal
+          </h1>
+          <p className="text-sm text-gray-500">Sign in to your account</p>
+        </div>
+
+        {error && (
+          <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3">
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-[#2E7D5E]">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#2E7D5E]"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-[#2E7D5E]">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#2E7D5E]"
+              placeholder="........"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-lg bg-[#2E5E4E] px-6 py-3.5 font-semibold text-white transition-colors hover:bg-[#264E40] disabled:opacity-50"
+          >
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
+
+          <div className="pt-1 text-center">
+            <Link to="/forgot-password" className="text-sm text-gray-500 underline hover:text-gray-700">
+              Forgot Password?
+            </Link>
+          </div>
+        </form>
+
+        <div className="mt-6 border-t border-gray-200 pt-6">
+          <p className="mb-3 text-center text-sm text-gray-600">Don't have an account?</p>
+          <Link
+            to="/register"
+            className="block w-full rounded-lg bg-gray-100 px-6 py-3 text-center font-semibold text-gray-800 transition-colors hover:bg-gray-200"
+          >
+            Create Account
+          </Link>
+        </div>
+
+        {isAuth0Configured && (
+          <div className="mt-4">
+            <button
+              type="button"
+              onClick={loginWithAuth0}
+              className="w-full rounded-lg border border-gray-300 bg-white px-6 py-3 font-semibold text-gray-800 transition-colors hover:bg-gray-50"
+            >
+              Continue with Auth0
+            </button>
+          </div>
+        )}
+
+        <div className="mt-6 p-2 text-center">
+          <img
+            src={goodsRecyclingLogo}
+            alt="Goods Recycling logo"
+            className="mx-auto h-24 w-auto"
+          />
+        </div>
+
+        <div className="mt-6 rounded-lg border border-gray-200 bg-gray-50 p-4">
+          <p className="mb-2 text-xs font-semibold text-gray-700">Demo Credentials:</p>
+          <div className="space-y-1 text-xs text-gray-600">
+            <div>
+              <span className="font-medium">Partner:</span> partner@charity.org / partner123
+            </div>
+            <div>
+              <span className="font-medium">Staff:</span> admin@goodsrecycling.org / admin123
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <footer className="py-6 text-center text-xs text-gray-600">
+        <p>© 2026 GoodsRecycling.com</p>
+      </footer>
+    </div>
+  );
+}
