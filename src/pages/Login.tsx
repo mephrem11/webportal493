@@ -68,22 +68,17 @@ export function Login() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-emerald-50 via-white to-cyan-50">
-      {/* Top-left branding header */}
-      <header className="w-full bg-white border-b border-emerald-100 shadow-sm px-6 py-4 sm:px-10">
+      {/* Top-left branding */}
+      <div className="w-full px-6 py-5 sm:px-10">
         <div className="flex items-center gap-4">
-          <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-16 w-auto sm:h-20" />
-          <div className="flex flex-col leading-tight">
-            <span className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight" style={{ fontFamily: "Playfair Display, serif", letterSpacing: "-0.01em" }}>
-              Goods Recycling
-            </span>
-            <span className="text-sm sm:text-base font-medium text-emerald-700 tracking-widest uppercase mt-0.5">
-              Community Resource Portal
-            </span>
+          <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-20 w-auto sm:h-24" />
+          <div className="flex flex-col">
+            <span className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif", letterSpacing: "-0.02em" }}>Goods Recycling</span>
+            <span className="text-sm font-medium text-emerald-700 tracking-wide uppercase">Partner &amp; Staff Portal</span>
           </div>
         </div>
-      </header>
-
-      <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 py-8 sm:px-6">
+      </div>
+      <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 pb-8 sm:px-6">
       <section className="relative w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-xl shadow-emerald-100/40 lg:p-8">
         <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-emerald-100/60 blur-2xl" />
         <div className="pointer-events-none absolute -left-12 -bottom-12 h-28 w-28 rounded-full bg-cyan-100/70 blur-xl" />
@@ -92,7 +87,6 @@ export function Login() {
           <h1 className="mb-2 text-4xl font-bold text-gray-900 sm:text-5xl" style={{ fontFamily: "Playfair Display, serif" }}>
             Sign In
           </h1>
-          <p className="text-sm text-gray-600 sm:text-base">One secure login for staff administrators and charity partners.</p>
         </div>
 
         {error && (
