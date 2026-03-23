@@ -7,7 +7,9 @@
 :root {
   font-family: "Manrope", sans-serif;
   color: #1f2937;
-  background: radial-gradient(circle at 10% 10%, #f0fdf4 0%, #ecfeff 45%, #ffffff 100%);
+  --app-bg: #e7e3dc;
+  --app-surface: #f1ede6;
+  background: radial-gradient(circle at 10% 10%, #ece8e1 0%, #e7e3dc 48%, #e2ddd5 100%);
 }
 
 * {
@@ -18,11 +20,22 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
+  background-color: var(--app-bg);
 }
 
 #root {
   width: 100%;
   overflow-x: clip;
+  background-color: var(--app-bg);
+}
+
+/* Global surface override to remove stark white backgrounds across the app. */
+.bg-white {
+  background-color: var(--app-surface) !important;
+}
+
+.bg-white\/95 {
+  background-color: rgba(241, 237, 230, 0.95) !important;
 }
 
 @media (max-width: 640px) {

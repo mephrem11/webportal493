@@ -292,9 +292,9 @@ export function CharityPortalSimple() {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-100 via-gray-50 to-slate-100">
+    <div className="min-h-screen bg-[#E7E3DC]">
       {/* Header */}
-      <div className="bg-white/95 border-b border-slate-300 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
+      <div className="bg-[#F1EDE6]/95 border-b border-slate-300 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3 sm:gap-4">
             <img src="/favicon.svg" alt="" className="h-12 w-auto md:h-14" />

@@ -90,7 +90,7 @@ export function Login() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-emerald-50 via-white to-cyan-50">
+    <div className="flex min-h-screen flex-col bg-[#E7E3DC]">
       {/* Top-left logo */}
       <div className="px-6 pt-5 sm:px-10">
         <img src={goodsRecyclingLogo} alt="Goods Recycling" style={{ height: '180px', width: 'auto' }} />
