@@ -152,17 +152,6 @@ export function Login() {
           />
         </div>
 
-        <div className="mt-6 rounded-lg border border-gray-200 bg-gray-50 p-4">
-          <p className="mb-2 text-xs font-semibold text-gray-700">Demo Credentials:</p>
-          <div className="space-y-1 text-xs text-gray-600">
-            <div>
-              <span className="font-medium">Partner:</span> partner@charity.org / partner123
-            </div>
-            <div>
-              <span className="font-medium">Staff:</span> admin@goodsrecycling.org / admin123
-            </div>
-          </div>
-        </div>
       </div>
       </div>
 

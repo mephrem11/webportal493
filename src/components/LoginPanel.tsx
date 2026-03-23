@@ -345,27 +345,6 @@ export function LoginPanel() {
                   </ul>
                 </div>
 
-                <div className="p-5 border-2 rounded-lg bg-gradient-to-br from-amber-50 to-orange-50 border-amber-300">
-                  <h4 className="flex items-center gap-2 mb-3 text-sm font-bold text-amber-900">Demo Credentials</h4>
-                  {activeTab === "partner" ? (
-                    <div>
-                      <p className="mb-1 text-xs font-semibold text-amber-800">Charity Partner:</p>
-                      <div className="p-2 bg-white border rounded border-amber-300">
-                        <p className="text-xs font-mono text-amber-900">partner@charity.org</p>
-                        <p className="text-xs font-mono text-amber-900">partner123</p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="mb-1 text-xs font-semibold text-amber-800">Staff Administrator:</p>
-                      <div className="p-2 bg-white border rounded border-amber-300">
-                        <p className="text-xs font-mono text-amber-900">admin@goodsrecycling.org</p>
-                        <p className="text-xs font-mono text-amber-900">admin123</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
                 {activeTab === "partner" && (
                   <p className="text-xs font-medium text-center text-emerald-700">
                     <Link to="/apply" className="font-semibold hover:text-emerald-900 hover:underline md:hidden">
