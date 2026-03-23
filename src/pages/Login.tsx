@@ -126,7 +126,10 @@ export function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-black px-6 py-3.5 font-semibold text-white transition-all hover:bg-gray-900 disabled:opacity-50"
+            className="w-full rounded-lg px-6 py-3.5 font-semibold text-white transition-all disabled:opacity-50"
+            style={{ backgroundColor: '#000000' }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#111111')}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#000000')}
           >
             {loading ? "Signing in..." : "Sign In"}
           </button>
@@ -146,6 +149,10 @@ export function Login() {
           >
             Create Account
           </Link>
+          <div className="mt-5 flex flex-col items-center gap-2">
+            <img src="/favicon.svg" alt="Goods Recycling logo" className="h-10 w-10" />
+            <span className="text-sm font-semibold text-gray-700 tracking-wide">Goods Recycling</span>
+          </div>
         </div>
 
         {isAuth0Configured && (
