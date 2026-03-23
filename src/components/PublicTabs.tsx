@@ -11,7 +11,7 @@ export function PublicTabs() {
         <div className="text-sm font-semibold uppercase tracking-wide text-emerald-700">
           Goods Recycling
         </div>
-        <nav className="grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-2" aria-label="Main navigation">
+        <nav className="flex items-center gap-2" aria-label="Main navigation">
           {tabs.map((tab) => (
             <NavLink
               key={tab.to}

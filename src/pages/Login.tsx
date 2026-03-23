@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Lock, Mail, ShieldCheck } from "lucide-react";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { useAuth0 } from "../contexts/Auth0Context";
 import { PublicTabs } from "../components/PublicTabs";
@@ -70,8 +71,15 @@ export function Login() {
       <PublicTabs />
 
       <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 py-8 sm:px-6">
-      <section className="w-full rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm lg:p-8">
-        <div className="mb-6">
+      <section className="relative w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-xl shadow-emerald-100/40 lg:p-8">
+        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-emerald-100/60 blur-2xl" />
+        <div className="pointer-events-none absolute -left-12 -bottom-12 h-28 w-28 rounded-full bg-cyan-100/70 blur-xl" />
+
+        <div className="relative mb-6">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-800">
+            <ShieldCheck size={14} />
+            Unified Access
+          </div>
           <h1 className="mb-2 text-3xl font-bold text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif" }}>
             Sign In
           </h1>
@@ -87,32 +95,38 @@ export function Login() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="mb-2 block text-sm font-semibold text-[#2E7D5E]">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#2E7D5E]"
-              placeholder="you@example.com"
-              required
-            />
+            <div className="relative">
+              <Mail size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 py-3 pl-10 pr-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#2E7D5E]"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
           </div>
 
           <div>
             <label className="mb-2 block text-sm font-semibold text-[#2E7D5E]">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#2E7D5E]"
-              placeholder="........"
-              required
-            />
+            <div className="relative">
+              <Lock size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 py-3 pl-10 pr-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#2E7D5E]"
+                placeholder="........"
+                required
+              />
+            </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-[#2E5E4E] px-6 py-3.5 font-semibold text-white transition-colors hover:bg-[#264E40] disabled:opacity-50"
+            className="w-full rounded-lg bg-gradient-to-r from-[#2E7D5E] to-[#26624C] px-6 py-3.5 font-semibold text-white transition-all hover:from-[#246B4E] hover:to-[#1E5540] disabled:opacity-50"
           >
             {loading ? "Signing in..." : "Sign In"}
           </button>
@@ -145,6 +159,10 @@ export function Login() {
             </button>
           </div>
         )}
+
+        <div className="mt-6 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-xs text-gray-600">
+          Secure authentication with role-based access control is active for both staff and charity partners.
+        </div>
 
       </section>
       </div>
