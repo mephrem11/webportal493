@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
-import { Package, FileText, Calendar, MessageSquare, Truck, Search, ChevronLeft, ChevronRight, Repeat, CalendarX2 } from "lucide-react";
+import { Package, FileText, Calendar, MessageSquare, Truck, Search, ChevronLeft, ChevronRight, Repeat } from "lucide-react";
 import { triggerGoogleSheetsSync } from "../utils/googleSheetsSync";
 import { INVENTORY_CATEGORIES } from "../constants/inventory";
 
@@ -403,17 +403,6 @@ export function CharityPortalSimple() {
             <div>
               <div className="font-semibold">Weekly Schedule</div>
               <div className="text-xs text-fuchsia-800">Delivery calendar and dates</div>
-            </div>
-          </Link>
-
-          <Link
-            to="/closed-dates"
-            className="flex items-center gap-3 rounded-lg border border-orange-300 bg-orange-100 p-4 text-orange-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-orange-200 hover:shadow-lg"
-          >
-            <CalendarX2 size={24} className="text-orange-700" />
-            <div>
-              <div className="font-semibold text-black">Closed / Holiday Dates</div>
-              <div className="text-xs text-black">View closures and holiday dates</div>
             </div>
           </Link>
 
