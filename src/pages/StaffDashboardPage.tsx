@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Package,
   Users,
+  Search,
   FileText,
   Settings,
   BarChart3,
@@ -22,6 +23,7 @@ import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { StaffSupportRequestManager } from "../components/StaffSupportRequestManager";
 import { INVENTORY_CATEGORIES } from "../constants/inventory";
 import goodsRecyclingLogo from "../assets/logo.svg";
+import { triggerFullSheetsSync } from "../utils/googleSheetsSync";
 
 interface Request {
   id: string;
@@ -59,6 +61,15 @@ interface SharedDelivery {
   endTime?: string;
   contactName?: string;
   createdAt?: string;
+}
+
+interface CustomerRecord {
+  email: string;
+  name: string;
+  organization: string;
+  status: "active" | "pending" | "suspended";
+  requestCount: number;
+  lastRequestAt: string;
 }
 
 function firstText(row: Record<string, unknown>, keys: string[]): string {
@@ -169,16 +180,109 @@ function readSharedDeliveries(): SharedDelivery[] {
   }
 }
 
+function readCustomersFromStorage(): CustomerRecord[] {
+  const simpleRequests = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("simple_requests") || "[]") as Array<Record<string, unknown>>;
+    } catch {
+      return [];
+    }
+  })();
+
+  const mockUsers = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("mock_users") || "[]") as Array<Record<string, unknown>>;
+    } catch {
+      return [];
+    }
+  })();
+
+  const userAccounts = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("user_accounts") || "[]") as Array<Record<string, unknown>>;
+    } catch {
+      return [];
+    }
+  })();
+
+  const customersByEmail = new Map<string, CustomerRecord>();
+
+  const upsert = (input: Partial<CustomerRecord> & { email: string }) => {
+    const email = input.email.trim().toLowerCase();
+    if (!email) return;
+    const existing = customersByEmail.get(email);
+    customersByEmail.set(email, {
+      email,
+      name: input.name?.trim() || existing?.name || email.split("@")[0] || "Customer",
+      organization: input.organization?.trim() || existing?.organization || "Charity Partner",
+      status: input.status || existing?.status || "pending",
+      requestCount: input.requestCount ?? existing?.requestCount ?? 0,
+      lastRequestAt: input.lastRequestAt || existing?.lastRequestAt || "",
+    });
+  };
+
+  for (const user of mockUsers) {
+    const role = String(user.role ?? "").toLowerCase();
+    if (role !== "charity_partner") continue;
+    const statusRaw = String(user.status ?? "pending").toLowerCase();
+    const status: CustomerRecord["status"] =
+      statusRaw === "active" || statusRaw === "suspended" ? statusRaw : "pending";
+    upsert({
+      email: String(user.email ?? ""),
+      name: String(user.name ?? ""),
+      organization: String(user.organization ?? ""),
+      status,
+    });
+  }
+
+  for (const account of userAccounts) {
+    const role = String(account.role ?? "charity_partner").toLowerCase();
+    if (role !== "charity_partner") continue;
+    const statusRaw = String(account.status ?? "pending").toLowerCase();
+    const status: CustomerRecord["status"] =
+      statusRaw === "active" || statusRaw === "suspended" ? statusRaw : "pending";
+    upsert({
+      email: String(account.email ?? ""),
+      name: String(account.name ?? ""),
+      organization: String(account.organization ?? ""),
+      status,
+    });
+  }
+
+  for (const request of simpleRequests) {
+    const email = String(request.partner_email ?? request.email ?? "").trim().toLowerCase();
+    if (!email) continue;
+    const existing = customersByEmail.get(email);
+    const createdAt = String(request.created_at ?? request.createdAt ?? "");
+    const requestCount = (existing?.requestCount || 0) + 1;
+    const lastRequestAt =
+      !existing?.lastRequestAt || (createdAt && new Date(createdAt).getTime() > new Date(existing.lastRequestAt).getTime())
+        ? createdAt
+        : existing.lastRequestAt;
+
+    upsert({
+      email,
+      requestCount,
+      lastRequestAt,
+    });
+  }
+
+  return Array.from(customersByEmail.values()).sort((a, b) => a.name.localeCompare(b.name));
+}
+
 export function StaffDashboardPage() {
   const { user, logout, isAdmin } = useSimpleAuth();
   const navigate = useNavigate();
   const [requests] = useState<Request[]>(getStoredRequests);
   const [inventorySummary, setInventorySummary] = useState<InventorySummary[]>(buildInventorySummary);
-  type TabName = "overview" | "partners" | "requests" | "support" | "staff";
+  type TabName = "overview" | "customers" | "partners" | "requests" | "support" | "staff";
   const [activeTab, setActiveTab] = useState<TabName>("overview");
   const [partners, setPartners] = useState<PartnerAccount[]>(readPartners);
   const [staffMembers, setStaffMembers] = useState<StaffMember[]>(readStaffMembers);
   const [sharedDeliveries, setSharedDeliveries] = useState<SharedDelivery[]>(readSharedDeliveries);
+  const [customers, setCustomers] = useState<CustomerRecord[]>(readCustomersFromStorage);
+  const [customerSearch, setCustomerSearch] = useState("");
+  const [syncingCustomers, setSyncingCustomers] = useState(false);
   const [inviteName, setInviteName] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteMsg, setInviteMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
@@ -223,6 +327,17 @@ export function StaffDashboardPage() {
   const refreshInventory = useCallback(() => setInventorySummary(buildInventorySummary()), []);
   const refreshPartners = useCallback(() => setPartners(readPartners()), []);
   const refreshDeliveries = useCallback(() => setSharedDeliveries(readSharedDeliveries()), []);
+  const refreshCustomers = useCallback(() => setCustomers(readCustomersFromStorage()), []);
+
+  const syncCustomersFromSheets = useCallback(async () => {
+    setSyncingCustomers(true);
+    try {
+      await triggerFullSheetsSync("staff_customers_tab");
+      refreshCustomers();
+    } finally {
+      setSyncingCustomers(false);
+    }
+  }, [refreshCustomers]);
 
   useEffect(() => {
     const onUpdate = () => refreshInventory();
@@ -230,6 +345,7 @@ export function StaffDashboardPage() {
       if (e.key === "staff_inventory" || e.key === "inventory_items") refreshInventory();
       if (e.key === "mock_users" || e.key === "user_accounts") refreshPartners();
       if (e.key === "scheduled_deliveries" || e.key === "partner_deliveries") refreshDeliveries();
+      if (e.key === "simple_requests" || e.key === "mock_users" || e.key === "user_accounts") refreshCustomers();
     };
     window.addEventListener("inventoryUpdated", onUpdate);
     window.addEventListener("focus", refreshDeliveries);
@@ -239,7 +355,7 @@ export function StaffDashboardPage() {
       window.removeEventListener("focus", refreshDeliveries);
       window.removeEventListener("storage", onStorage);
     };
-  }, [refreshInventory, refreshPartners, refreshDeliveries]);
+  }, [refreshInventory, refreshPartners, refreshDeliveries, refreshCustomers]);
 
   function updatePartnerStatus(id: string, status: PartnerAccount["status"]) {
     const updated = partners.map((p) => (p.id === id ? { ...p, status } : p));
@@ -304,6 +420,15 @@ export function StaffDashboardPage() {
     (s) => s.status === "open"
   );
   const pendingPartners = partners.filter((p) => p.status === "pending");
+  const filteredCustomers = customers.filter((customer) => {
+    const q = customerSearch.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      customer.name.toLowerCase().includes(q) ||
+      customer.email.toLowerCase().includes(q) ||
+      customer.organization.toLowerCase().includes(q)
+    );
+  });
 
   const navCards = [
     {
@@ -382,7 +507,7 @@ export function StaffDashboardPage() {
       <div className="max-w-5xl mx-auto px-6 py-8">
         {/* Tabs */}
         <div className="mb-8 flex flex-wrap gap-2 rounded-xl border border-gray-200 bg-white p-2 shadow-sm">
-          {(["overview", "partners", "requests", "support", ...(isAdmin ? ["staff"] : [])] as TabName[]).map((tab) => (
+          {(["overview", "customers", "partners", "requests", "support", ...(isAdmin ? ["staff"] : [])] as TabName[]).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -396,6 +521,11 @@ export function StaffDashboardPage() {
               {tab === "partners" && pendingPartners.length > 0 && (
                 <span className="ml-1.5 bg-yellow-500 text-white text-xs px-1.5 py-0.5 rounded-full">
                   {pendingPartners.length}
+                </span>
+              )}
+              {tab === "customers" && customers.length > 0 && (
+                <span className="ml-1.5 bg-emerald-700 text-white text-xs px-1.5 py-0.5 rounded-full">
+                  {customers.length}
                 </span>
               )}
               {tab === "requests" && pendingRequests.length > 0 && (
@@ -579,6 +709,78 @@ export function StaffDashboardPage() {
                 Quick Actions
               </button>
             </div>
+          </div>
+        )}
+
+        {activeTab === "customers" && (
+          <div className="space-y-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900">Customer Directory</h2>
+                <p className="text-xs text-gray-500">Searchable charity partner list from Google Sheets synced data and portal accounts.</p>
+              </div>
+              <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+                <div className="relative w-full sm:w-72">
+                  <Search size={15} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    value={customerSearch}
+                    onChange={(e) => setCustomerSearch(e.target.value)}
+                    placeholder="Search name, email, organization"
+                    className="w-full rounded-lg border border-gray-300 py-2 pl-9 pr-3 text-sm focus:border-[#00C853] focus:outline-none focus:ring-2 focus:ring-[#00C853]"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    void syncCustomersFromSheets();
+                  }}
+                  disabled={syncingCustomers}
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#00C853] bg-[#00C853] px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#00B248] disabled:opacity-60"
+                >
+                  <RefreshCw size={14} className={syncingCustomers ? "animate-spin" : ""} />
+                  Sync From Sheets
+                </button>
+              </div>
+            </div>
+
+            {filteredCustomers.length === 0 ? (
+              <div className="rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
+                <Users size={36} className="mx-auto mb-3 text-gray-300" />
+                <p className="text-gray-500">No customers found for this search.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredCustomers.map((customer) => (
+                  <div key={customer.email} className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">{customer.name}</p>
+                        <p className="text-xs text-gray-500">{customer.email}</p>
+                        <p className="text-xs text-gray-600 mt-1">{customer.organization}</p>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${
+                          customer.status === "active"
+                            ? "bg-green-100 text-green-700"
+                            : customer.status === "suspended"
+                            ? "bg-red-100 text-red-700"
+                            : "bg-yellow-100 text-yellow-700"
+                        }`}>
+                          {customer.status}
+                        </span>
+                        <span className="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">
+                          {customer.requestCount} request{customer.requestCount === 1 ? "" : "s"}
+                        </span>
+                        <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-700">
+                          Last: {customer.lastRequestAt ? new Date(customer.lastRequestAt).toLocaleDateString() : "-"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
