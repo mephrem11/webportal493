@@ -68,6 +68,21 @@ export function Login() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-emerald-50 via-white to-cyan-50">
+      {/* Top-left branding header */}
+      <header className="w-full bg-white border-b border-emerald-100 shadow-sm px-6 py-4 sm:px-10">
+        <div className="flex items-center gap-4">
+          <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-16 w-auto sm:h-20" />
+          <div className="flex flex-col leading-tight">
+            <span className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight" style={{ fontFamily: "Playfair Display, serif", letterSpacing: "-0.01em" }}>
+              Goods Recycling
+            </span>
+            <span className="text-sm sm:text-base font-medium text-emerald-700 tracking-widest uppercase mt-0.5">
+              Community Resource Portal
+            </span>
+          </div>
+        </div>
+      </header>
+
       <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 py-8 sm:px-6">
       <section className="relative w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-xl shadow-emerald-100/40 lg:p-8">
         <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-emerald-100/60 blur-2xl" />
@@ -145,6 +160,7 @@ export function Login() {
           </Link>
           <div className="mt-5 flex flex-col items-center gap-2">
             <img src={goodsRecyclingLogo} alt="" className="h-28 w-auto" />
+            <span className="text-2xl font-extrabold text-gray-900 tracking-wide">Goods Reclyign</span>
           </div>
         </div>
 
