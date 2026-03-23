@@ -71,9 +71,9 @@ export function Login() {
       {/* Top-left branding */}
       <div className="w-full px-6 py-5 sm:px-10">
         <div className="flex items-center gap-4">
-          <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-20 w-auto sm:h-24" />
+          <img src={goodsRecyclingLogo} alt="Goods Recycling" className="h-24 w-auto sm:h-28" />
           <div className="flex flex-col">
-            <span className="text-5xl font-extrabold tracking-tight text-gray-900 sm:text-6xl" style={{ fontFamily: "Playfair Display, serif", letterSpacing: "-0.02em" }}>Goods Recycling</span>
+            <span className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif", letterSpacing: "-0.02em" }}>Goods Recycling</span>
           </div>
         </div>
       </div>
