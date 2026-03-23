@@ -363,7 +363,24 @@ export function StaffDashboardPage() {
 
   async function updatePartnerStatus(id: string, status: PartnerAccount["status"]) {
     const currentPartner = partners.find((p) => p.id === id);
-    const updated = partners.map((p) => (p.id === id ? { ...p, status } : p));
+    const isPendingApproval = currentPartner?.status === "pending" && status === "active";
+    const updated = partners.map((p) =>
+      p.id === id
+        ? {
+            ...p,
+            status,
+            ...(isPendingApproval
+              ? {
+                  password: "partner123",
+                  mustChangePassword: true,
+                  forcePasswordReset: true,
+                  securityQ1: "",
+                  securityQ2: "",
+                }
+              : {}),
+          }
+        : p
+    );
     setPartners(updated);
     localStorage.setItem("mock_users", JSON.stringify(updated));
     try {
@@ -372,7 +389,25 @@ export function StaffDashboardPage() {
       if (partner) {
         localStorage.setItem(
           "user_accounts",
-          JSON.stringify(accounts.map((a) => a.email === partner.email ? { ...a, status } : a))
+          JSON.stringify(
+            accounts.map((a) =>
+              a.email === partner.email
+                ? {
+                    ...a,
+                    status,
+                    ...(isPendingApproval
+                      ? {
+                          password: "partner123",
+                          mustChangePassword: true,
+                          forcePasswordReset: true,
+                          securityQ1: "",
+                          securityQ2: "",
+                        }
+                      : {}),
+                  }
+                : a
+            )
+          )
         );
       }
     } catch { /* ignore */ }

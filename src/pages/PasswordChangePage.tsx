@@ -6,7 +6,16 @@ import { getPasswordRuleState, PASSWORD_RULE_TEXTS } from "../utils/passwordRule
 export function PasswordChangePage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const email = (location.state as { email?: string } | null)?.email ?? "";
+  const emailFromState = (location.state as { email?: string } | null)?.email ?? "";
+  const emailFromSession = (() => {
+    try {
+      const session = localStorage.getItem("user_session");
+      return session ? (JSON.parse(session) as { email?: string }).email ?? "" : "";
+    } catch {
+      return "";
+    }
+  })();
+  const email = emailFromState || emailFromSession;
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -71,10 +80,32 @@ export function PasswordChangePage() {
             password: newPassword,
             securityQ1: securityQ1.trim(),
             securityQ2: securityQ2.trim(),
+            forcePasswordReset: false,
+            mustChangePassword: false,
           }
         : a
     );
     localStorage.setItem("user_accounts", JSON.stringify(updated));
+
+    // Keep mock_users in sync for staff-side views.
+    try {
+      const mockUsers = JSON.parse(localStorage.getItem("mock_users") || "[]") as Array<Record<string, unknown>>;
+      const updatedUsers = mockUsers.map((u) =>
+        String(u.email || "").toLowerCase() === email.toLowerCase()
+          ? {
+              ...u,
+              password: newPassword,
+              securityQ1: securityQ1.trim(),
+              securityQ2: securityQ2.trim(),
+              forcePasswordReset: false,
+              mustChangePassword: false,
+            }
+          : u
+      );
+      localStorage.setItem("mock_users", JSON.stringify(updatedUsers));
+    } catch {
+      // ignore mock user sync failures
+    }
 
     // Update session
     const session = localStorage.getItem("user_session");

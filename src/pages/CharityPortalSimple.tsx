@@ -152,11 +152,26 @@ export function CharityPortalSimple() {
   useEffect(() => {
     if (!user?.email) return;
     try {
-      const accounts = JSON.parse(localStorage.getItem("user_accounts") || "[]") as Array<{ email: string; status?: string }>;
+      const accounts = JSON.parse(localStorage.getItem("user_accounts") || "[]") as Array<{
+        email: string;
+        status?: string;
+        forcePasswordReset?: boolean;
+        mustChangePassword?: boolean;
+        securityQ1?: string;
+        securityQ2?: string;
+      }>;
       const account = accounts.find((a) => a.email.toLowerCase() === user.email.toLowerCase());
       const status = account?.status;
       if (status === "pending" || status === "suspended") {
         navigate("/my-account");
+        return;
+      }
+      if (status === "active") {
+        const needsPasswordReset = Boolean(account?.forcePasswordReset || account?.mustChangePassword);
+        const missingSecurity = !String(account?.securityQ1 || "").trim() || !String(account?.securityQ2 || "").trim();
+        if (needsPasswordReset || missingSecurity) {
+          navigate("/password-change", { state: { email: user.email } });
+        }
       }
     } catch {
       // ignore and allow portal rendering

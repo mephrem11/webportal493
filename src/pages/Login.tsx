@@ -25,6 +25,27 @@ function getPartnerStatus(email: string): "pending" | "active" | "suspended" | n
   return null;
 }
 
+function requiresPartnerSetup(email: string): boolean {
+  const normalized = email.trim().toLowerCase();
+  try {
+    const accounts = JSON.parse(localStorage.getItem("user_accounts") || "[]") as Array<{
+      email: string;
+      status?: string;
+      forcePasswordReset?: boolean;
+      mustChangePassword?: boolean;
+      securityQ1?: string;
+      securityQ2?: string;
+    }>;
+    const account = accounts.find((a) => a.email.toLowerCase() === normalized);
+    if (!account || account.status !== "active") return false;
+    const needsPasswordReset = Boolean(account.forcePasswordReset || account.mustChangePassword);
+    const missingSecurity = !String(account.securityQ1 || "").trim() || !String(account.securityQ2 || "").trim();
+    return needsPasswordReset || missingSecurity;
+  } catch {
+    return false;
+  }
+}
+
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,6 +71,8 @@ export function Login() {
           const status = user.email ? getPartnerStatus(user.email) : null;
           if (status === "pending" || status === "suspended") {
             navigate("/my-account");
+          } else if (user.email && requiresPartnerSetup(user.email)) {
+            navigate("/password-change", { state: { email: user.email } });
           } else {
             navigate("/portal");
           }

@@ -69,7 +69,7 @@ export function buildPartnerApprovedEmail(name: string): { from: string; subject
   return {
     from: "noreply@goodsrecycling.org",
     subject: "Your Goods Recycling partner account has been approved!",
-    message: `Hi ${name || "Partner"},\n\nGreat news! Your Goods Recycling partner account has been reviewed and approved. You can now log in and access the full charity partner portal.\n\nThank you,\nGoods Recycling Team`,
+    message: `Hi ${name || "Partner"},\n\nGreat news! Your Goods Recycling partner account has been reviewed and approved.\n\nSign in with your approved email and this temporary password: partner123\n\nFor security, you must change your password and complete both security questions before portal access is granted.\n\nThank you,\nGoods Recycling Team`,
   };
 }
 
