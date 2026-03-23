@@ -24,6 +24,9 @@ import { StaffSupportRequestManager } from "../components/StaffSupportRequestMan
 import { INVENTORY_CATEGORIES } from "../constants/inventory";
 import goodsRecyclingLogo from "../assets/logo.svg";
 import { triggerFullSheetsSync } from "../utils/googleSheetsSync";
+import { buildPartnerApprovedEmail } from "../utils/emailSimulation";
+import { sendPortalEmail } from "../utils/emailService";
+import { buildPartnerApprovedSms, sendPortalSms } from "../utils/smsService";
 
 interface Request {
   id: string;
@@ -42,6 +45,7 @@ interface PartnerAccount {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   organization: string;
   role: "charity_partner" | "admin";
   status: "active" | "pending" | "suspended";
@@ -357,7 +361,8 @@ export function StaffDashboardPage() {
     };
   }, [refreshInventory, refreshPartners, refreshDeliveries, refreshCustomers]);
 
-  function updatePartnerStatus(id: string, status: PartnerAccount["status"]) {
+  async function updatePartnerStatus(id: string, status: PartnerAccount["status"]) {
+    const currentPartner = partners.find((p) => p.id === id);
     const updated = partners.map((p) => (p.id === id ? { ...p, status } : p));
     setPartners(updated);
     localStorage.setItem("mock_users", JSON.stringify(updated));
@@ -371,6 +376,29 @@ export function StaffDashboardPage() {
         );
       }
     } catch { /* ignore */ }
+
+    // Notify partner only when they are approved from pending -> active.
+    if (currentPartner?.status === "pending" && status === "active") {
+      const partnerName = currentPartner.name?.trim() || "Partner";
+      const partnerEmail = currentPartner.email?.trim().toLowerCase();
+      if (partnerEmail) {
+        const approvalEmail = buildPartnerApprovedEmail(partnerName);
+        await sendPortalEmail({
+          to: partnerEmail,
+          from: approvalEmail.from,
+          subject: approvalEmail.subject,
+          message: approvalEmail.message,
+        });
+      }
+
+      const partnerPhone = (currentPartner.phone || "").trim();
+      if (partnerPhone) {
+        await sendPortalSms({
+          to: partnerPhone,
+          message: buildPartnerApprovedSms(partnerName),
+        });
+      }
+    }
   }
 
   function handleInviteStaff(e: React.FormEvent) {
@@ -843,6 +871,9 @@ export function StaffDashboardPage() {
                         <div>
                           <p className="font-semibold text-gray-900 text-sm">{partner.name}</p>
                           <p className="text-xs text-gray-500">{partner.email} · {partner.organization}</p>
+                          {partner.phone && (
+                            <p className="text-xs text-gray-400">Mobile: {partner.phone}</p>
+                          )}
                         </div>
                       </div>
                       <div className="flex items-center gap-2 flex-wrap">

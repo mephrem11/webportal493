@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import nodemailer from "nodemailer";
 import cors from "cors";
@@ -12,6 +13,10 @@ const SMTP_PORT = parseInt(process.env.SMTP_PORT || "587", 10);
 const SMTP_USER = process.env.SMTP_USER || "";
 const SMTP_PASS = process.env.SMTP_PASS || "";
 const SMTP_FROM = process.env.SMTP_FROM || SMTP_USER || "noreply@goodsrecycling.org";
+
+const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID || "";
+const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN || "";
+const TWILIO_FROM_NUMBER = process.env.TWILIO_FROM_NUMBER || "";
 
 let transporter = null;
 let usingRealSMTP = false;
@@ -96,6 +101,49 @@ app.post("/send-email", async (req, res) => {
     }
   } catch (err) {
     console.error("Email send error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/send-sms", async (req, res) => {
+  const { to, message } = req.body;
+
+  if (!to || !message) {
+    return res.status(400).json({ error: "Missing required fields: to, message" });
+  }
+
+  if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_FROM_NUMBER) {
+    return res.status(503).json({ error: "Twilio is not configured. Set TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_FROM_NUMBER." });
+  }
+
+  try {
+    const body = new URLSearchParams({
+      To: String(to),
+      From: TWILIO_FROM_NUMBER,
+      Body: String(message),
+    });
+
+    const response = await fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString("base64")}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body,
+      },
+    );
+
+    const payload = await response.json();
+    if (!response.ok) {
+      throw new Error(payload?.message || `Twilio failed with ${response.status}`);
+    }
+
+    console.log(`📱  SMS delivered to ${to}`);
+    res.json({ success: true, sid: payload.sid });
+  } catch (err) {
+    console.error("SMS send error:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
