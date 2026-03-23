@@ -117,7 +117,7 @@ function normalizeDeliveryStatus(status: string): Delivery["status"] {
 }
 
 export function PartnerDeliveries() {
-  const pageSizeOptions = [15, 25, 75, 100, 500] as const;
+  const pageSizeOptions = [15, 25, 45, 50, 95, 100] as const;
   const { isAdmin } = useSimpleAuth();
   const navigate = useNavigate();
 

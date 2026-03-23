@@ -735,7 +735,7 @@ export function CharityPortalSimple() {
                 }}
                 className="border border-gray-300 rounded-md px-2 py-1 bg-white"
               >
-                {[25, 50, 100].map((size) => (
+                {[15, 25, 45, 50, 95, 100].map((size) => (
                   <option key={size} value={size}>{size}</option>
                 ))}
               </select>
