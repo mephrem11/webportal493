@@ -21,9 +21,9 @@ export function DonationBinPage() {
           <article className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 shadow-sm sm:p-8">
             <h2 className="text-2xl font-bold text-emerald-900">What to Give</h2>
             <ul className="mt-4 space-y-3 text-sm text-emerald-950 sm:text-base">
-              <li className="rounded-lg bg-white px-4 py-3">Gently used clothing and shoes.</li>
-              <li className="rounded-lg bg-white px-4 py-3">Accessories: purses, school bags, belts, seasonal accessories, jewelry.</li>
-              <li className="rounded-lg bg-white px-4 py-3">Useful gifts you no longer need.</li>
+              <li className="rounded-lg bg-white px-4 py-3">Gently used clothing and shoes (that dress that looked great online but did not fit right).</li>
+              <li className="rounded-lg bg-white px-4 py-3">Accessories: purses, school bags, belts, winter and summer accessories, jewellery.</li>
+              <li className="rounded-lg bg-white px-4 py-3">That present from your coworker you will never use.</li>
               <li className="rounded-lg bg-white px-4 py-3">New diapers, linens, and blankets.</li>
               <li className="rounded-lg bg-white px-4 py-3">Usable, non-broken electronics: smartphones, tablets, laptops, headphones, consoles, cameras.</li>
               <li className="rounded-lg bg-white px-4 py-3">Kitchen appliances: blenders, mixers, juicers (for example KitchenAid, Vitamix, Breville).</li>
@@ -33,7 +33,7 @@ export function DonationBinPage() {
           <article className="rounded-2xl border border-rose-200 bg-rose-50 p-6 shadow-sm sm:p-8">
             <h2 className="text-2xl font-bold text-rose-900">What NOT to Give</h2>
             <ul className="mt-4 space-y-3 text-sm text-rose-950 sm:text-base">
-              <li className="rounded-lg bg-white px-4 py-3">Dirty, stained, ripped, or broken items.</li>
+              <li className="rounded-lg bg-white px-4 py-3">Dirty, stained, ripped, or broken items (if you would not give it to a relative or friend, send it to a textile recycler).</li>
               <li className="rounded-lg bg-white px-4 py-3">Furniture and mattresses (anything that cannot fit inside the bin).</li>
               <li className="rounded-lg bg-white px-4 py-3">Food.</li>
               <li className="rounded-lg bg-white px-4 py-3">Books.</li>

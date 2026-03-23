@@ -39,6 +39,11 @@ export function HowItWorksPage() {
             charity you choose. The remaining 50% supports operating costs that keep the service running.
           </p>
           <p className="mt-4 text-sm leading-7 text-gray-700 sm:text-base">
+            We also sort donations into many operational categories to support specific community partners. For
+            example, formalwear can be stored year-round and shared for military family events, while winter clothing
+            is staged during warmer months so inventory is ready when cold-weather demand increases.
+          </p>
+          <p className="mt-4 text-sm leading-7 text-gray-700 sm:text-base">
             When you partner with Goods Recycling, you do more than donate goods. You support critical community
             service providers with meaningful local impact.
           </p>
