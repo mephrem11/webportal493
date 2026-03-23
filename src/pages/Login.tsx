@@ -70,10 +70,10 @@ export function Login() {
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-emerald-50 via-white to-cyan-50">
       <PublicTabs />
 
-      <div className="mx-auto w-full max-w-6xl px-4 pt-3 sm:px-6">
-        <div className="ml-auto inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-3 py-1.5 shadow-sm">
-          <img src="/favicon.svg" alt="Goods Recycling logo" className="h-7 w-7" />
-          <span className="text-xs font-semibold uppercase tracking-wide text-gray-700">LOGO Goods Recycling</span>
+      <div className="fixed right-3 top-16 z-30 sm:right-6 sm:top-20">
+        <div className="inline-flex items-center gap-2 rounded-full border-2 border-emerald-300 bg-white px-4 py-2 shadow-md">
+          <img src="/favicon.svg" alt="Goods Recycling logo" className="h-9 w-9" />
+          <span className="text-sm font-extrabold uppercase tracking-wide text-gray-800">LOGO Goods Recycling</span>
         </div>
       </div>
 
@@ -153,8 +153,8 @@ export function Login() {
             Create Account
           </Link>
           <div className="mt-5 flex flex-col items-center gap-2">
-            <img src="/favicon.svg" alt="Goods Recycling logo" className="h-16 w-16" />
-            <span className="text-xl font-bold text-gray-800 tracking-wide">Goods Recycling</span>
+            <img src="/favicon.svg" alt="Goods Recycling logo" className="h-24 w-24" />
+            <span className="text-2xl font-extrabold text-gray-900 tracking-wide">Goods Recycling</span>
           </div>
         </div>
 
