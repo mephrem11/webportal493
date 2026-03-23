@@ -14,6 +14,7 @@ import {
   buildStaffNotifyEmail,
 } from "../utils/emailSimulation";
 import { sendPortalEmail } from "../utils/emailService";
+import { buildApplicationSubmissionSms, sendPortalSms } from "../utils/smsService";
 
 const benefits = [
   {
@@ -82,6 +83,11 @@ export function PartnersPage() {
       message: partnerEmail.message,
     });
 
+    const smsSend = await sendPortalSms({
+      to: form.phone.trim(),
+      message: buildApplicationSubmissionSms(form.contactName.trim()),
+    });
+
     const staffEmail = buildStaffNotifyEmail(normalizedEmail, orgName);
     const staffSend = await sendPortalEmail({
       to: "admin@goodsrecycling.org",
@@ -90,8 +96,8 @@ export function PartnersPage() {
       message: staffEmail.message,
     });
 
-    if (!partnerSend.sent || !staffSend.sent) {
-      const details = [partnerSend.error, staffSend.error].filter(Boolean).join(" | ");
+    if (!partnerSend.sent || !staffSend.sent || !smsSend.sent) {
+      const details = [partnerSend.error, staffSend.error, smsSend.error].filter(Boolean).join(" | ");
       alert(`Application submitted. Email provider fallback is active. ${details}`);
     }
 
@@ -115,7 +121,7 @@ export function PartnersPage() {
             Thank you for applying to become a Goods Recycling partner. Our team will review your application and get back to you within 5 business days.
           </p>
           <p className="text-sm text-gray-500 mb-8">
-            We sent a confirmation to <strong>{form.email}</strong>
+            We sent a confirmation email to <strong>{form.email}</strong> and a confirmation text to <strong>{form.phone}</strong>
           </p>
           <button
             onClick={() => navigate("/")}

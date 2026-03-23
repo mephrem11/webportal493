@@ -31,6 +31,14 @@ export function buildPartnerApprovedSms(name: string): string {
   return `Hi ${name || "Partner"}, your Goods Recycling partner account has been approved. You can now sign in.`;
 }
 
+export function buildAccountSubmissionSms(name: string): string {
+  return `Hi ${name || "Partner"}, we received your account form submission. Your account is pending staff review.`;
+}
+
+export function buildApplicationSubmissionSms(name: string): string {
+  return `Hi ${name || "Partner"}, we received your Goods Recycling partner application. We will review it within 5 business days.`;
+}
+
 export async function sendPortalSms(sms: PortalSms): Promise<SmsSendResult> {
   if (!SMS_ENDPOINT) {
     queueSimulatedSms(sms);

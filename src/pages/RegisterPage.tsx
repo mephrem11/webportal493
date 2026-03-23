@@ -8,6 +8,7 @@ import {
   buildStaffNotifyEmail,
 } from "../utils/emailSimulation";
 import { sendPortalEmail } from "../utils/emailService";
+import { buildAccountSubmissionSms, sendPortalSms } from "../utils/smsService";
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -106,6 +107,11 @@ export function RegisterPage() {
       message: partnerEmail.message,
     });
 
+    const smsSend = await sendPortalSms({
+      to: form.phone.trim(),
+      message: buildAccountSubmissionSms(form.name.trim()),
+    });
+
     // Staff-side notification email.
     const staffEmail = buildStaffNotifyEmail(form.email.trim().toLowerCase(), form.organization.trim());
     await sendPortalEmail({
@@ -115,11 +121,11 @@ export function RegisterPage() {
       message: staffEmail.message,
     });
 
-    if (partnerSend.sent) {
-      alert(`Account created! A confirmation email has been sent to ${form.email.trim().toLowerCase()}. A staff member will review your account before access is granted.`);
-    } else {
-      alert(`Account created! A confirmation email has been queued for ${form.email.trim().toLowerCase()}. A staff member will review your account before access is granted.`);
-    }
+    const emailState = partnerSend.sent ? "sent" : "queued";
+    const smsState = smsSend.sent ? "sent" : "queued";
+    alert(
+      `Account created! We received your form submission. Confirmation email ${emailState} to ${form.email.trim().toLowerCase()} and confirmation text ${smsState} to ${form.phone.trim()}. A staff member will review your account before access is granted.`
+    );
 
     // Auto-login the new partner and show their account status page
     try {
