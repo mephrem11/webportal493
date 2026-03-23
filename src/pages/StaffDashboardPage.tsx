@@ -413,6 +413,9 @@ export function StaffDashboardPage() {
   }
 
   const pendingRequests = requests.filter((r) => r.status === "pending");
+  const upcomingRequests = [...pendingRequests]
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 6);
   const supportRequests: unknown[] = JSON.parse(
     localStorage.getItem("support_requests") || "[]"
   );
@@ -708,6 +711,39 @@ export function StaffDashboardPage() {
               >
                 Quick Actions
               </button>
+            </div>
+
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-5">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="font-semibold text-gray-900">Admin View: Upcoming Requests</h3>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("requests")}
+                  className="text-xs font-medium text-[#00C853] hover:text-[#00B248]"
+                >
+                  Open Requests Tab
+                </button>
+              </div>
+
+              {upcomingRequests.length === 0 ? (
+                <p className="text-sm text-gray-500">No pending upcoming requests.</p>
+              ) : (
+                <div className="divide-y divide-gray-100">
+                  {upcomingRequests.map((req) => (
+                    <div key={req.id} className="flex items-center justify-between py-2">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          {req.title || req.category || `Request #${req.id.slice(-6)}`}
+                        </p>
+                        <p className="text-xs text-gray-500">{new Date(req.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      <span className="rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-medium text-yellow-700">
+                        pending
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}

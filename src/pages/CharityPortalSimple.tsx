@@ -392,6 +392,28 @@ export function CharityPortalSimple() {
               <div className="text-xs text-fuchsia-800">Delivery calendar and dates</div>
             </div>
           </Link>
+
+          <Link
+            to="/delivery-confirmations"
+            className="flex items-center gap-3 rounded-lg border border-lime-300 bg-lime-100 p-4 text-lime-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-lime-200 hover:shadow-lg"
+          >
+            <Truck size={24} className="text-lime-700" />
+            <div>
+              <div className="font-semibold">Delivery Confirmation</div>
+              <div className="text-xs text-lime-800">Confirm completed deliveries</div>
+            </div>
+          </Link>
+
+          <Link
+            to="/closed-dates"
+            className="flex items-center gap-3 rounded-lg border border-rose-300 bg-rose-100 p-4 text-rose-950 shadow-md transition-all hover:-translate-y-0.5 hover:bg-rose-200 hover:shadow-lg"
+          >
+            <Calendar size={24} className="text-rose-700" />
+            <div>
+              <div className="font-semibold">Closed Dates</div>
+              <div className="text-xs text-rose-800">Holiday and blackout dates</div>
+            </div>
+          </Link>
         </div>
 
         <div className="mb-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
