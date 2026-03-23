@@ -6,26 +6,54 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Universal SMTP — works with any provider: Gmail, Outlook, Yahoo, iCloud, custom
+const SMTP_HOST = process.env.SMTP_HOST || "";
+const SMTP_PORT = parseInt(process.env.SMTP_PORT || "587", 10);
+const SMTP_USER = process.env.SMTP_USER || "";
+const SMTP_PASS = process.env.SMTP_PASS || "";
+const SMTP_FROM = process.env.SMTP_FROM || SMTP_USER || "noreply@goodsrecycling.org";
+
 let transporter = null;
-let testAccount = null;
+let usingRealSMTP = false;
 
 async function createTransporter() {
-  // Creates a free Ethereal Email test account automatically — no sign-up required.
-  // Every email sent will have a preview link logged to the console.
-  testAccount = await nodemailer.createTestAccount();
+  if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
+    transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: SMTP_PORT,
+      secure: SMTP_PORT === 465,
+      auth: { user: SMTP_USER, pass: SMTP_PASS },
+      tls: { rejectUnauthorized: false },
+    });
 
+    try {
+      await transporter.verify();
+      usingRealSMTP = true;
+      console.log("\n📧  Email server ready  — real delivery enabled");
+      console.log(`    SMTP host : ${SMTP_HOST}:${SMTP_PORT}`);
+      console.log(`    Sending from: ${SMTP_FROM}\n`);
+    } catch (err) {
+      console.error("\n❌  SMTP connection failed:", err.message);
+      console.log("    Check your SMTP_HOST / SMTP_USER / SMTP_PASS in .env\n");
+      await fallbackToEthereal();
+    }
+  } else {
+    await fallbackToEthereal();
+  }
+}
+
+async function fallbackToEthereal() {
+  const testAccount = await nodemailer.createTestAccount();
   transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
     secure: false,
-    auth: {
-      user: testAccount.user,
-      pass: testAccount.pass,
-    },
+    auth: { user: testAccount.user, pass: testAccount.pass },
   });
-
-  console.log("\n📧  Email server ready  (Ethereal test mode)");
-  console.log("    View sent emails at: https://ethereal.email/messages");
+  usingRealSMTP = false;
+  console.log("\n⚠️   Email server in TEST MODE (Ethereal — NOT delivered to real inboxes)");
+  console.log("    Add SMTP_HOST + SMTP_USER + SMTP_PASS to .env to enable real delivery.");
+  console.log("    View test emails at: https://ethereal.email/messages");
   console.log(`    Login  →  ${testAccount.user}  /  ${testAccount.pass}\n`);
 }
 
@@ -42,22 +70,30 @@ app.post("/send-email", async (req, res) => {
 
   try {
     const info = await transporter.sendMail({
-      from: from || "noreply@goodsrecycling.org",
+      from: `"Goods Recycling" <${SMTP_FROM}>`,
       to,
       subject,
       text: message,
-      html: `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px">
-        ${message.split("\n").map((line) => `<p style="margin:4px 0">${line}</p>`).join("")}
-        <hr style="margin-top:32px;border:none;border-top:1px solid #eee"/>
-        <p style="font-size:12px;color:#999;margin-top:16px">Goods Recycling · Automated notification</p>
+      html: `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#fff">
+        <div style="background:linear-gradient(135deg,#C6F6D5,#A7F3D0);padding:24px 24px 16px;border-radius:12px 12px 0 0;text-align:center">
+          <h2 style="margin:0;color:#1a1a1a;font-size:20px">Goods Recycling</h2>
+        </div>
+        <div style="padding:24px;background:#fafafa;border-radius:0 0 12px 12px">
+          ${message.split("\n").map((line) => `<p style="margin:6px 0;color:#333">${line || "&nbsp;"}</p>`).join("")}
+        </div>
+        <p style="font-size:11px;color:#aaa;margin-top:16px;text-align:center">Goods Recycling · Automated notification · Do not reply</p>
       </div>`,
     });
 
-    const previewUrl = nodemailer.getTestMessageUrl(info);
-    console.log(`✉️   Sent to ${to}`);
-    console.log(`     Preview: ${previewUrl}\n`);
-
-    res.json({ success: true, messageId: info.messageId, previewUrl });
+    if (usingRealSMTP) {
+      console.log(`✉️   Delivered to ${to}`);
+      res.json({ success: true, messageId: info.messageId });
+    } else {
+      const previewUrl = nodemailer.getTestMessageUrl(info);
+      console.log(`✉️   Test email for ${to}`);
+      console.log(`     Preview: ${previewUrl}\n`);
+      res.json({ success: true, messageId: info.messageId, previewUrl });
+    }
   } catch (err) {
     console.error("Email send error:", err.message);
     res.status(500).json({ error: err.message });
