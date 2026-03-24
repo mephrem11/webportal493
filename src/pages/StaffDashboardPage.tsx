@@ -561,7 +561,7 @@ export function StaffDashboardPage() {
               <img
                 src={goodsRecyclingLogo}
                 alt="Goods Recycling logo"
-                className="h-16 w-auto sm:h-20"
+                className="h-24 w-auto sm:h-28"
               />
               <div>
               <h1 className="text-2xl font-bold text-gray-950">Staff Dashboard</h1>

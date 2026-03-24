@@ -182,7 +182,7 @@ export function PortalPage() {
       <div className="bg-gradient-to-r from-[#00C853] to-[#00A843] text-white px-4 py-6 sm:px-6 sm:py-8">
         <div className="max-w-4xl mx-auto flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex items-center gap-3">
-            <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-14 w-auto sm:h-16" />
+            <img src={goodsRecyclingLogo} alt="Goods Recycling logo" className="h-24 w-auto sm:h-28" />
             <div>
             <h1 className="text-xl font-bold sm:text-2xl">Partner Portal</h1>
             <p className="text-white/80 text-xs sm:text-sm mt-1">

@@ -101,14 +101,14 @@ export function Login() {
             <img
               src={goodsRecyclingLogo}
               alt="Goods Recycling logo"
-              style={{ width: "240px", maxWidth: "80vw", height: "auto", display: "block" }}
+                style={{ width: "600px", maxWidth: "90vw", height: "auto", display: "block" }}
               loading="eager"
             />
           </div>
           <h1 className="mb-2 text-3xl font-bold text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif" }}>
             Sign In
           </h1>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">Charity Portal</p>
+          <p className="text-lg font-semibold uppercase tracking-[0.2em] text-emerald-700">Charity Portal</p>
         </div>
 
         {error && (

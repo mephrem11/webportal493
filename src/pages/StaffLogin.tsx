@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Lock, Eye, EyeOff, LogIn } from "lucide-react";
+import goodsRecyclingLogo from "../assets/logo.svg";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import type { AuthUser } from "../contexts/SimpleAuthContext";
 
@@ -102,10 +103,12 @@ export function StaffLogin() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 flex flex-col px-4">
       <div className="flex flex-1 items-center justify-center py-8">
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-md">
-        <div className="bg-gradient-to-r from-gray-800 to-gray-700 px-8 py-6 text-center">
-          <div className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
-            <Lock size={28} className="text-white" />
-          </div>
+        <div className="bg-gradient-to-r from-gray-800 to-gray-700 px-8 py-8 text-center">
+          <img
+            src={goodsRecyclingLogo}
+            alt="Goods Recycling logo"
+            className="mx-auto mb-4 h-24 w-auto brightness-0 invert"
+          />
           <h1 className="text-2xl font-bold text-white">Staff Portal</h1>
           <p className="text-white/80 text-sm mt-1">Goods Recycling Internal Access</p>
         </div>
