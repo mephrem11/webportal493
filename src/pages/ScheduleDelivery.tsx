@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Calendar, MapPin, Clock, CheckCircle } from "lucide-react";
 import { AddressAutocomplete } from "../components/AddressAutocomplete";
@@ -10,37 +10,38 @@ export function ScheduleDelivery() {
   const [searchParams] = useSearchParams();
   const editId = searchParams.get("edit");
 
-  const [form, setForm] = useState({
-    day: "Monday",
-    startTime: "10:00",
-    endTime: "12:00",
-    address: "",
-    contactName: "",
-    contactPhone: "",
-    notes: "",
+  const [form, setForm] = useState(() => {
+    const base = {
+      day: "Monday",
+      startTime: "10:00",
+      endTime: "12:00",
+      address: "",
+      contactName: "",
+      contactPhone: "",
+      notes: "",
+    };
+    if (!editId) return base;
+    try {
+      const draft = JSON.parse(localStorage.getItem("edit_delivery_draft") || "null");
+      if (draft) {
+        localStorage.removeItem("edit_delivery_draft");
+        return {
+          day: draft.day || "Monday",
+          startTime: draft.startTime || "10:00",
+          endTime: draft.endTime || "12:00",
+          address: draft.address || "",
+          contactName: draft.contactName || "",
+          contactPhone: draft.contactPhone || "",
+          notes: draft.notes || "",
+        };
+      }
+    } catch {
+      // ignore malformed draft payload and keep defaults
+    }
+    return base;
   });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (editId) {
-      try {
-        const draft = JSON.parse(localStorage.getItem("edit_delivery_draft") || "null");
-        if (draft) {
-          setForm({
-            day: draft.day || "Monday",
-            startTime: draft.startTime || "10:00",
-            endTime: draft.endTime || "12:00",
-            address: draft.address || "",
-            contactName: draft.contactName || "",
-            contactPhone: draft.contactPhone || "",
-            notes: draft.notes || "",
-          });
-          localStorage.removeItem("edit_delivery_draft");
-        }
-      } catch { /* ignore */ }
-    }
-  }, [editId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

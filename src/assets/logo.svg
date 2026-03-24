@@ -1,24 +1,24 @@
-<svg width="740" height="500" viewBox="0 0 740 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="900" height="640" viewBox="-80 -80 900 640" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" overflow="visible">
   <title>Goods Recycling</title>
   <desc>Winged box logo mark with Goods Recycling wordmark.</desc>
 
-  <g stroke="#2DBA73" stroke-width="11" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M370 28V84" />
-    <path d="M462 52L434 96" />
-    <path d="M278 52L306 96" />
-    <path d="M266 204L292 164" />
-    <path d="M474 204L448 164" />
-    <path d="M370 224V178" />
+  <g stroke="#169B62" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M370 14V86" />
+    <path d="M474 40L434 102" />
+    <path d="M266 40L306 102" />
+    <path d="M252 230L292 164" />
+    <path d="M488 230L448 164" />
+    <path d="M370 246V178" />
   </g>
 
-  <g fill="#FFFFFF" stroke="#2DBA73" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="#E7F7EE" stroke="#169B62" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
     <path d="M320 120L370 132V210L320 196V120Z" />
     <path d="M370 132L422 118V196L370 210V132Z" />
     <path d="M320 120L298 94L344 102L362 130L320 120Z" />
     <path d="M370 132L362 102L398 106L434 112L422 118L370 132Z" />
   </g>
 
-  <g fill="none" stroke="#2DBA73" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="none" stroke="#169B62" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
     <path d="M188 176C210 140 234 126 260 130C285 134 300 150 320 168" />
     <path d="M188 176C198 188 210 196 228 200" />
     <path d="M214 168C224 182 238 192 258 196" />
@@ -34,7 +34,7 @@
     x="370"
     y="420"
     text-anchor="middle"
-    fill="#08AD72"
+    fill="#0F7A4D"
     font-family="Avenir Next, Montserrat, Helvetica, Arial, sans-serif"
     font-size="66"
     font-weight="700"

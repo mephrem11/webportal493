@@ -12,6 +12,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import logo from "../assets/logo.svg";
+import logoMark from "../assets/logo-mark.svg";
 
 export function LoginPanel() {
   const { login, loading } = useSimpleAuth();
@@ -19,6 +20,7 @@ export function LoginPanel() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [logoSrc, setLogoSrc] = useState(logo);
   const [activeTab, setActiveTab] = useState<"partner" | "staff">("partner");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -76,7 +78,16 @@ export function LoginPanel() {
           className="mb-16 text-center"
         >
           <div className="flex flex-col items-center justify-center gap-3">
-            <img src={logo} alt="Goods Recycling" className="object-contain w-auto h-28 md:h-36" />
+            <img
+              src={logoSrc}
+              alt="Goods Recycling"
+              loading="eager"
+              className="block h-auto w-[420px] max-w-[94vw] object-contain"
+              onError={() => setLogoSrc(logoMark)}
+            />
+            <p className="text-3xl font-extrabold text-[#0F7A4D]" style={{ fontFamily: "Space Grotesk, sans-serif" }}>
+              Goods Recycling
+            </p>
           </div>
         </motion.div>
 

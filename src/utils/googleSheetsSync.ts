@@ -520,8 +520,7 @@ function writeDeliveriesFromSheet(rows: Record<string, unknown>[]) {
         hasOperationalDetails,
       };
     })
-    .filter((row) => row.id && row.hasOperationalDetails)
-    .map(({ hasOperationalDetails, ...delivery }) => delivery);
+    .filter((row) => row.id && row.hasOperationalDetails);
 
   localStorage.setItem("scheduled_deliveries", JSON.stringify(deliveries));
   localStorage.setItem("partner_deliveries", JSON.stringify(deliveries));

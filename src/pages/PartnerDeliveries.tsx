@@ -204,10 +204,6 @@ export function PartnerDeliveries() {
     return haystack.includes(searchTerm.trim().toLowerCase());
   });
 
-  useEffect(() => {
-    setPage(1);
-  }, [filter, searchTerm]);
-
   const totalRows = filtered.length;
   const totalPages = Math.max(1, Math.ceil(totalRows / rowsPerPage));
   const safePage = Math.min(page, totalPages);
@@ -255,7 +251,10 @@ export function PartnerDeliveries() {
               id="deliveries-search"
               type="text"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setPage(1);
+              }}
               placeholder="Search by BIN address, driver, milestone, or ID"
               className="w-full pl-9 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00C853] text-gray-900"
             />
@@ -267,7 +266,10 @@ export function PartnerDeliveries() {
           {["all", "awaiting-pickup", "in-progress", "full", "half-full", "cancelled"].map((f) => (
             <button
               key={f}
-              onClick={() => setFilter(f)}
+              onClick={() => {
+                setFilter(f);
+                setPage(1);
+              }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors capitalize ${
                 filter === f
                   ? "bg-[#00C853] text-white"

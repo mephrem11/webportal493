@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Lock, Mail } from "lucide-react";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { useAuth0 } from "../contexts/Auth0Context";
-import goodsRecyclingLogo from "../assets/logo.svg";
 
 function getPartnerStatus(email: string): "pending" | "active" | "suspended" | null {
   const normalized = email.trim().toLowerCase();
@@ -90,23 +89,17 @@ export function Login() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#E7E3DC]">
-      {/* Top-left logo */}
-      <div className="px-6 pt-5 sm:px-10">
-        <img src={goodsRecyclingLogo} alt="Goods Recycling" style={{ height: '180px', width: 'auto' }} />
-      </div>
-      <div className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 pb-8 sm:px-6">
-      <section className="relative w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white p-6 shadow-xl shadow-emerald-100/40 lg:p-8">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-emerald-100/60 blur-2xl" />
-        <div className="pointer-events-none absolute -left-12 -bottom-12 h-28 w-28 rounded-full bg-cyan-100/70 blur-xl" />
-
-        <div className="relative mb-6">
-          <p className="mb-2 text-base font-semibold uppercase tracking-[0.24em] text-emerald-700 sm:text-lg">
-            Charity Portal
-          </p>
+    <div className="flex min-h-screen flex-col bg-white">
+      <div className="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center px-4 py-8 sm:px-6">
+      <section
+        className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md shadow-gray-200/60 lg:p-8"
+        style={{ backgroundColor: "#FFFFFF" }}
+      >
+        <div className="relative mb-8 flex flex-col items-center text-center">
           <h1 className="mb-2 text-3xl font-bold text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif" }}>
             Sign In
           </h1>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">Charity Portal</p>
         </div>
 
         {error && (
@@ -172,9 +165,6 @@ export function Login() {
           >
             Create Account
           </Link>
-          <div className="mt-5 flex justify-center">
-            <img src={goodsRecyclingLogo} alt="Goods Recycling" style={{ height: '200px', width: 'auto' }} />
-          </div>
         </div>
 
         {isAuth0Configured && (

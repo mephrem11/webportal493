@@ -62,16 +62,6 @@ export function AvailableInventory() {
   const endIndex = Math.min(startIndex + pageSize, totalItems);
   const paginated = filtered.slice(startIndex, endIndex);
 
-  useEffect(() => {
-    setPage(1);
-  }, [search, selectedCategory, pageSize]);
-
-  useEffect(() => {
-    if (page > totalPages) {
-      setPage(totalPages);
-    }
-  }, [page, totalPages]);
-
   return (
     <div className="min-h-screen bg-[#E8E3DC]">
       <div className="max-w-6xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
@@ -100,7 +90,10 @@ export function AvailableInventory() {
               </label>
               <select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => {
+                  setSelectedCategory(e.target.value);
+                  setPage(1);
+                }}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
               >
                 <option value="All">All Categories</option>
@@ -118,7 +111,10 @@ export function AvailableInventory() {
                 <input
                   type="text"
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setPage(1);
+                  }}
                   placeholder="Filter by category, size, color, condition…"
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 />
@@ -215,7 +211,10 @@ export function AvailableInventory() {
               <span>Rows per page:</span>
               <select
                 value={pageSize}
-                onChange={(e) => setPageSize(Number(e.target.value))}
+                onChange={(e) => {
+                  setPageSize(Number(e.target.value));
+                  setPage(1);
+                }}
                 className="border border-gray-300 rounded-md px-2 py-1 bg-white"
               >
                 {[15, 25, 45, 50, 95, 100].map((size) => (
