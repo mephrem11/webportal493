@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, UserPlus, CheckCircle, XCircle } from "lucide-react";
 import goodsRecyclingLogo from "../assets/logo.svg";
-import goodsRecyclingMark from "../assets/logo-mark.svg";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { getPasswordRuleState, isPasswordCompliant, PASSWORD_RULE_TEXTS } from "../utils/passwordRules";
 import {
@@ -15,7 +14,6 @@ import { buildAccountSubmissionSms, sendPortalSms } from "../utils/smsService";
 export function RegisterPage() {
   const navigate = useNavigate();
   const { login } = useSimpleAuth();
-  const [logoSrc, setLogoSrc] = useState(goodsRecyclingLogo);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -141,17 +139,18 @@ export function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: "#FFFFFF" }}>
       <div
-        className="rounded-2xl border border-gray-200 shadow-md shadow-gray-200/60 overflow-hidden w-full max-w-md"
+        className="rounded-2xl border border-gray-200 shadow-md shadow-gray-200/60 w-full max-w-md"
         style={{ backgroundColor: "#FFFFFF" }}
       >
-        <div className="px-4 py-5 text-center sm:px-8 sm:py-6" style={{ backgroundColor: "#FFFFFF" }}>
-          <img
-            src={logoSrc}
-            alt="Goods Recycling logo"
-            className="mx-auto block h-auto w-[320px] max-w-[85vw] object-contain"
-            loading="eager"
-            onError={() => setLogoSrc(goodsRecyclingMark)}
-          />
+        <div className="px-4 py-6 text-center sm:px-8 sm:py-8" style={{ backgroundColor: "#FFFFFF" }}>
+          <div className="flex justify-center mb-4">
+            <img
+              src={goodsRecyclingLogo}
+              alt="Goods Recycling logo"
+              style={{ width: "260px", maxWidth: "80vw", height: "auto", display: "block" }}
+              loading="eager"
+            />
+          </div>
           <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
             <UserPlus size={28} className="text-gray-900" />
           </div>

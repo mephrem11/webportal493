@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Lock, Mail } from "lucide-react";
+import goodsRecyclingLogo from "../assets/logo.svg";
 import { useSimpleAuth } from "../contexts/SimpleAuthContext";
 import { useAuth0 } from "../contexts/Auth0Context";
 
@@ -96,6 +97,14 @@ export function Login() {
         style={{ backgroundColor: "#FFFFFF" }}
       >
         <div className="relative mb-8 flex flex-col items-center text-center">
+          <div className="flex justify-center mb-5">
+            <img
+              src={goodsRecyclingLogo}
+              alt="Goods Recycling logo"
+              style={{ width: "240px", maxWidth: "80vw", height: "auto", display: "block" }}
+              loading="eager"
+            />
+          </div>
           <h1 className="mb-2 text-3xl font-bold text-gray-900 sm:text-4xl" style={{ fontFamily: "Playfair Display, serif" }}>
             Sign In
           </h1>
