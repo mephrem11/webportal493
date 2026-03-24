@@ -157,13 +157,13 @@ export function RegisterPage() {
             <UserPlus size={28} className="text-gray-900" />
           </div>
           <h1 className="text-2xl font-bold text-gray-950">Create Account</h1>
-          <p className="text-lg font-bold text-[#169B62] mt-1">Goods Recycling</p>
+          <p className="text-3xl font-extrabold text-[#169B62] mt-1 tracking-tight">Goods Recycling</p>
           {/* Logo directly under Create Account */}
-          <div className="flex justify-center mt-4 mb-2">
+          <div className="flex justify-center mt-5 mb-2">
             <img
               src={goodsRecyclingLogo}
               alt="Goods Recycling logo"
-              style={{ width: "220px", maxWidth: "78vw", height: "auto", display: "block" }}
+              style={{ width: "320px", maxWidth: "90vw", height: "auto", display: "block" }}
               loading="eager"
             />
           </div>
