@@ -147,6 +147,7 @@ export function RegisterPage() {
             <UserPlus size={28} className="text-gray-900" />
           </div>
           <h1 className="text-2xl font-bold text-gray-950">Create Account</h1>
+          <p className="text-lg font-bold text-[#169B62] mt-1">Goods Recycling</p>
           <p className="text-gray-800 text-sm mt-1">Join the Goods Recycling partner network</p>
           <div className="flex justify-center mt-5">
             <img
