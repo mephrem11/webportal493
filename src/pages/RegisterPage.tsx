@@ -143,19 +143,19 @@ export function RegisterPage() {
         style={{ backgroundColor: "#FFFFFF" }}
       >
         <div className="px-4 py-6 text-center sm:px-8 sm:py-8" style={{ backgroundColor: "#FFFFFF" }}>
-          <div className="flex justify-center mb-4">
-            <img
-              src={goodsRecyclingLogo}
-              alt="Goods Recycling logo"
-              style={{ width: "260px", maxWidth: "80vw", height: "auto", display: "block" }}
-              loading="eager"
-            />
-          </div>
           <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
             <UserPlus size={28} className="text-gray-900" />
           </div>
           <h1 className="text-2xl font-bold text-gray-950">Create Account</h1>
           <p className="text-gray-800 text-sm mt-1">Join the Goods Recycling partner network</p>
+          <div className="flex justify-center mt-5">
+            <img
+              src={goodsRecyclingLogo}
+              alt="Goods Recycling logo"
+              style={{ width: "240px", maxWidth: "78vw", height: "auto", display: "block" }}
+              loading="eager"
+            />
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="p-4 space-y-4 sm:p-8">
