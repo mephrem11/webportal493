@@ -137,7 +137,17 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: "#FFFFFF" }}>
+    <div className="relative min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: "#FFFFFF" }}>
+      {/* Top-left corner logo */}
+      <div className="absolute top-4 left-4">
+        <img
+          src={goodsRecyclingLogo}
+          alt="Goods Recycling"
+          style={{ width: "120px", height: "auto", display: "block" }}
+          loading="eager"
+        />
+      </div>
+
       <div
         className="rounded-2xl border border-gray-200 shadow-md shadow-gray-200/60 w-full max-w-md"
         style={{ backgroundColor: "#FFFFFF" }}
@@ -148,15 +158,16 @@ export function RegisterPage() {
           </div>
           <h1 className="text-2xl font-bold text-gray-950">Create Account</h1>
           <p className="text-lg font-bold text-[#169B62] mt-1">Goods Recycling</p>
-          <p className="text-gray-800 text-sm mt-1">Join the Goods Recycling partner network</p>
-          <div className="flex justify-center mt-5">
+          {/* Logo directly under Create Account */}
+          <div className="flex justify-center mt-4 mb-2">
             <img
               src={goodsRecyclingLogo}
               alt="Goods Recycling logo"
-              style={{ width: "240px", maxWidth: "78vw", height: "auto", display: "block" }}
+              style={{ width: "220px", maxWidth: "78vw", height: "auto", display: "block" }}
               loading="eager"
             />
           </div>
+          <p className="text-gray-800 text-sm mt-2">Join the Goods Recycling partner network</p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-4 space-y-4 sm:p-8">
